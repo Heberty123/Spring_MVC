@@ -27,7 +27,6 @@ public class ProfessorController {
 
 	@GetMapping("/professores")
 	public ModelAndView index() {
-
 		List<Professor> professores = this.professorRepository.findAll();
 		ModelAndView mv = new ModelAndView("professores/index");
 		mv.addObject("professores", professores);
@@ -35,7 +34,7 @@ public class ProfessorController {
 	}
 	
 	@GetMapping("/professores/new")
-	public ModelAndView nnew() {
+	public ModelAndView nnew(RequisicaoNovoProfessor requisicao) {
 		ModelAndView mv = new ModelAndView("professores/new");
 		mv.addObject("listaStatusProfessor", StatusProfessor.values());
 		return mv;
@@ -47,15 +46,12 @@ public class ProfessorController {
 			System.out.println("\n********************* Tem erros ********************\n");
 			ModelAndView mv = new ModelAndView("professores/new");
 			mv.addObject("listaStatusProfessor", StatusProfessor.values());
-			mv.addObject("nome_ob", requisicao.getNome());
-			mv.addObject("salario_ob", requisicao.getSalario());
-			mv.addObject("status_ob", requisicao.getStatusProfessor());
 			return mv;
 		}
 		else {
 			Professor professor = requisicao.toProfessor();
 			this.professorRepository.save(professor);
-			return new ModelAndView("professores");	
+			return new ModelAndView("redirect:/professores");	
 		}
 			
 	}
