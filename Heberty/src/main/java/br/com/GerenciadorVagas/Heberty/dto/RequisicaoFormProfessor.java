@@ -9,7 +9,7 @@ import javax.validation.constraints.NotNull;
 import br.com.GerenciadorVagas.Heberty.models.Professor;
 import br.com.GerenciadorVagas.Heberty.models.StatusProfessor;
 
-public class RequisicaoNovoProfessor {
+public class RequisicaoFormProfessor {
 
 	@NotBlank
 	@NotNull
@@ -42,6 +42,12 @@ public class RequisicaoNovoProfessor {
 	public Professor toProfessor() {
 		Professor professor = new Professor(this.nome, this.salario, this.statusProfessor);
 		return professor;
+	}
+	
+	public void fromProfessor(Professor professor) {
+		this.nome = professor.getNome();
+		this.salario = professor.getSalario();
+		this.statusProfessor = professor.getStatusProfessor();
 	}
 	
 	@Override

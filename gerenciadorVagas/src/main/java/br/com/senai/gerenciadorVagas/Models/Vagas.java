@@ -23,7 +23,7 @@ public class Vagas {
 	@Column(nullable = false)
 	private String requisitosDesejaveis;
 	@Column(nullable = false)
-	private BigDecimal Remuneracao;
+	private double Remuneracao;
 	@Column(nullable = false)
 	private String Beneficios;
 	@Column(nullable = false)
@@ -32,7 +32,7 @@ public class Vagas {
 	
 	public Vagas() {}
 	
-	public Vagas(String descricao, String requisitosObrigatorios, String requisitosDesejaveis, BigDecimal remuneracao,
+	public Vagas(String descricao, String requisitosObrigatorios, String requisitosDesejaveis, double remuneracao,
 		String beneficios, String localDeTrabalho) {
 		super();
 		Descricao = descricao;
@@ -86,12 +86,12 @@ public class Vagas {
 	}
 
 
-	public BigDecimal getRemuneracao() {
+	public double getRemuneracao() {
 		return Remuneracao;
 	}
 
 
-	public void setRemuneracao(BigDecimal remuneracao) {
+	public void setRemuneracao(double remuneracao) {
 		Remuneracao = remuneracao;
 	}
 
@@ -115,6 +115,14 @@ public class Vagas {
 		this.localDeTrabalho = localDeTrabalho;
 	}
 	
-	
+	public void from(Vagas vaga) {
+		this.Descricao = vaga.Descricao;
+		this.requisitosObrigatorios = vaga.requisitosObrigatorios;
+		this.requisitosDesejaveis = vaga.requisitosDesejaveis;
+		this.Remuneracao = vaga.Remuneracao;
+		this.Beneficios = vaga.Beneficios;
+		this.localDeTrabalho = vaga.localDeTrabalho;
+		
+	}
 	
 }

@@ -1,7 +1,7 @@
 <!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
-<meta charset="ISO-8859-1">
+<meta charset="UTF-8">
 <title>Insert title here</title>
 </head>
 <body>
@@ -11,26 +11,61 @@
 		 	 <thead>
 			     <tr>
 			     <th scope="col">Id</th>
-			     <th scope="col">Descrição</th>
+			     <th scope="col">DescriÃ§Ã£o</th>
 			     <th scope="col">Requisitos Obrigatorios</th>
-			     <th scope="col">Requisitos Desejáveis</th>
-			     <th scope="col">Remuneração</th>
+			     <th scope="col">Requisitos DesejÃ¡veis</th>
+			     <th scope="col">RemuneraÃ§Ã£o</th>
 			     <th scope="col">Beneficios</th>
 			     <th scope="col">Local de Trabalho</th>
+			     <th scope="col">detalhes</th>
+			     <th scope="col">editar</th>
+			     <th scope="col">excluir</th>
 			     </tr>
 			  </thead>   
 			  <tbody> 
     		     <tr th:each="vaga : ${lista}">
 			     <th scope="col" th:text="${vaga.getId()}">ID</th>
-			     <th scope="col" th:text="${vaga.getDescricao()}">Descrição</th>
+			     <th scope="col" th:text="${vaga.getDescricao()}">DescriÃ§Ã£o</th>
 			     <th scope="col" th:text="${vaga.getRequisitosObrigatorios()}">Requisitos Obrigatorios</th>
-			     <th scope="col" th:text="${vaga.getRequisitosDesejaveis()}">Requisitos Desejáveis</th>
-			     <th scope="col" th:text="${vaga.getRemuneracao()}">Remuneração</th>
+			     <th scope="col" th:text="${vaga.getRequisitosDesejaveis()}">Requisitos DesejÃ¡veis</th>
+			     <th scope="col" th:text="${vaga.getRemuneracao()}">RemuneraÃ§Ã£o</th>
 			     <th scope="col" th:text="${vaga.getBeneficios()}">Beneficios</th>
 			     <th scope="col" th:text="${vaga.getLocalDeTrabalho()}">Local de Trabalho</th>
+			     <th scope="col"><a th:href="@{/vagas/detalhes/{vagaID}(vagaID = ${vaga.getId()})}">detalhes</a></th>
+			     <th scope="col"><a th:href="@{/vagas/editar/{vagaID}(vagaID = ${vaga.getId()})}">editar</a></th>
+			     <th scope="col"><a th:href="@{/vagas/delete/{vagaID}(vagaID = ${vaga.getId()})}">Excluir</a></th>
 			     </tr>	
 			  </tbody>  
 			</table>
-		</div>
+			<div class="row">
+				<a class="col" th:href="@{/incluir}">Cadastrar uma</a> <a class="col" th:href="@{/inicial}">Voltar</a>
+			</div>
+			
+			
+			<!-- Button trigger modal -->
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+  Launch static backdrop modal
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="staticBackdropLabel">Modal title</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        ...
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Understood</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+	</div>
 </body>
 </html>

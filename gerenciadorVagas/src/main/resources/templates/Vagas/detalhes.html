@@ -1,0 +1,35 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	
+	<main>
+		<div class="container mt-4">
+			<div class="row">
+				<div class="col-12">
+					<b>detalhes sobre vaga </b> <span th:text="${vaga.id}"></span><br/>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-12">
+					<b>Descricao:</b> <span th:text="${vaga.Descricao}"></span><br/>
+					<b>Requisitos Obrigatorios:</b> <span th:text="${vaga.requisitosObrigatorios}"></span><br/><br/>
+					<b>Requisitos Desejaveis:</b> <span th:text="${vaga.requisitosDesejaveis}"></span><br/>
+					<b>Remuneração:</b> <span th:text="${vaga.Remuneracao}"></span><br/>
+					<b>Beneficios:</b> <span th:text="${vaga.Beneficios}"></span><br/>
+					<b>Local de Trabalho:</b> <span th:text="${vaga.localDeTrabalho}"></span><br/>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-12">
+					<a th:href="@{/vagas/editar/{vagaID}(vagaID = ${vaga.getId()})}">Editar</a> <a href="/lista">Voltar</a>
+				</div>
+			</div>
+		</div>
+	</main>
+	
+</body>
+</html>
