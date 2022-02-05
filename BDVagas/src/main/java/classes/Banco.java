@@ -10,7 +10,6 @@ import java.util.List;
 
 public class Banco {
 	
-	private static int id = 0;
 
 	public Connection getConexao() {
 		
@@ -87,22 +86,20 @@ public class Banco {
 	public void create(String Des, String reqO, String reqD, String Rem, String Ben, String Loc, int Abe) throws SQLException {
 		
 		Connection conexao = getConexao();
-		String sql = "INSERT INTO vagas (id, descricao, requisitosObrigatorios, requisitosDesejaveis, remuneracao, beneficio, localDeTrabalho, aberta)";
-		PreparedStatement ps = conexao.prepareStatement(sql + " VALUES (?, ?, ?, ?, ?, ?, ?, ?)");	
+		String sql = "INSERT INTO vagas (descricao, requisitosObrigatorios, requisitosDesejaveis, remuneracao, beneficio, localDeTrabalho, aberta)";
+		PreparedStatement ps = conexao.prepareStatement(sql + " VALUES (?, ?, ?, ?, ?, ?, ?)");	
 		
-		 ps.setInt(1, id);
-		 ps.setString(2, Des);
-		 ps.setString(3, reqO);
-		 ps.setString(4, reqD);
-		 ps.setString(5, Rem);
-		 ps.setString(6, Ben);
-		 ps.setString(7, Loc);
-		 ps.setInt(8, Abe);
+		 ps.setString(1, Des);
+		 ps.setString(2, reqO);
+		 ps.setString(3, reqD);
+		 ps.setString(4, Rem);
+		 ps.setString(5, Ben);
+		 ps.setString(6, Loc);
+		 ps.setInt(7, Abe);
 		 
 		 ps.execute();
 		
 		
-		 id++;
 	}
 	
 	public Vagas selectById(int id) throws SQLException {
@@ -124,6 +121,25 @@ public class Banco {
 		
 		
 		return new Vagas(idd, descricao, requisitosObrigatorios, requisitosDesejaveis, remuneracao, beneficio, localDeTrabalho, abertura);
+	}
+	
+	
+	public void Editar(int id, String Des, String reqO, String reqD, String Rem, String Ben, String Loc, int Abe) throws SQLException {
+		Connection conexao = getConexao();
+		String sql = "UPDATE vagas"
+				+ " SET descricao= ?, requisitosObrigatorios = ?, requisitosDesejaveis = ?, remuneracao = ?, beneficio = ?, localDeTrabalho = ?, aberta = ?"
+				+ " WHERE id = ?";
+		PreparedStatement ps = conexao.prepareStatement(sql);
+		ps.setString(1, Des);
+		ps.setString(2, reqO);
+		ps.setString(3, reqD);
+		ps.setString(4, Rem);
+		ps.setString(5, Ben);
+		ps.setString(6, Loc);
+		ps.setInt(7, Abe);
+		ps.setInt(8, id);
+		
+		ps.execute();
 	}
 	
 	
