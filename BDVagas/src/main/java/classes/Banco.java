@@ -24,7 +24,7 @@ public class Banco {
 		try {
 			String url = "jdbc:mysql://localhost:3306/BDVagas";
 			String user = "root";
-			String password = "Elokonamoda15";
+			String password = "root";
 			
 			conexao = DriverManager.getConnection(url, user, password);
 		}
