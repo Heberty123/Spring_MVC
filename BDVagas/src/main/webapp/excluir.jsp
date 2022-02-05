@@ -17,23 +17,29 @@
 <%@ page import="classes.Vagas" %>
 <%@ page import="classes.Banco" %>
 
+<h1>Excluir vagas</h1>
+
 <% 
 Banco banco = new Banco();
-for(Vagas var: banco.listar(1)){
+String id_String = request.getParameter("id");
+if (id_String != null){
+	
+	banco.deleteByID(Integer.parseInt(id_String));
 %>
+	
 	<div>
-		<h1>Id: <% out.println(var.getId()); %> <a href="">Apagar</a></h1>
-		<p>Descrição: <% out.println(var.getDescricao()); %></p>
-		<h2>Re.Obrigatórios: <% out.println(var.getRequisitosObrigatorios()); %></h2>
-		<h2>Re.Desejaveis: <% out.println(var.getRequisitosDesejaveis()); %></h2>
-		<h2>Remuneração: <% out.println(var.getRemuneracao()); %></h2>
-		<h2>Benefícios: <% out.println(var.getBeneficio()); %></h2>
-		<h2>Local de Trabalho: <% out.println(var.getLocalDeTrabalho()); %></h2>
-		<h2>Aberta: <% out.println(var.getAberta()); %></h2>
+		<h1> Vaga id: <% out.println(id_String); %> excluído com sucesso</h1>
 	</div>
+
 <%
 }
+else {
 %>
+
+	Volte para lista para excluir algumas vagas ! <a href="/BDVagas/listar.jsp">voltar</a>
+
+<%} %>
+
 
 </body>
 </html>

@@ -1,3 +1,4 @@
+<%@page import="classes.Banco"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
@@ -13,6 +14,59 @@
 <a href="./editar.jsp">Editar</a>
 <a href="./excluir.jsp">Excluir</a>
 <a href="./listar.jsp">Listar</a>
+
+<%@ page import="classes.Vagas" %>
+<%@ page import="classes.Banco" %>
+
+<%
+Banco banco = new Banco();
+String id_String = request.getParameter("id");
+int id = 0;
+Vagas vaga = null;
+if(id_String != null){
+	id = Integer.parseInt(id_String);
+	vaga = banco.selectById(id);
+
+%>
+
+<h1>Editar vaga <%out.print(id);%>!</h1>
+
+
+	<form action="/BDVagas/listar.jsp" method="Post">
+		<label for="des">Descricao: </label>
+		<input type="text" name="des" id="des" value="<%out.print(vaga.getDescricao());%>"><br>
+		
+		<label for="reqO">Requisições Obrigatórias: </label>
+		<input type="text" name="reqO" id="reqO" value="<%out.print(vaga.getRequisitosObrigatorios());%>"><br>
+		
+		<label for="reqD">Requisições Desejaveis: </label>
+		<input type="text" name="reqD" id="reqD" value="<%out.print(vaga.getRequisitosDesejaveis());%>"><br>
+		
+		<label for="rem">Remuneração: </label>
+		<input type="text" name="rem" id="rem" value="<%out.print(vaga.getRemuneracao());%>"><br>
+		
+		<label for="ben">Beneficios: </label>
+		<input type="text" name="ben" id="ben" value="<%out.print(vaga.getBeneficio());%>"><br>
+		
+		<label for="local">Local de trabalho: </label>
+		<input type="text" name="local" id="local" value="<%out.print(vaga.getLocalDeTrabalho());%>"><br>
+		
+		<label for="aberta">Aberta: </label>
+		<input type="text" name="aberta" id="aberta" value="<%out.print(vaga.getAberta());%>"><br>
+		
+		<input type="submit" value="enviar">
+	</form>
+<%}
+else {
+
+%>
+
+	<h2>Para editar algumas vagas, vai para lista <a href="/BDVagas/listar.jsp">editar</a> </h2>
+
+
+
+
+<%} %>
 
 </body>
 </html>
