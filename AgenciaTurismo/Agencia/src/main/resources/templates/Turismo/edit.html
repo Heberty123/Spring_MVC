@@ -1,0 +1,40 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+
+		<h1>Editando id <span th:text="${id}"></span></h1>
+	
+		<form th:object="${requisicaoTurismo}" th:action="@{/Turismo/edit/{turismoId}(turismoId = ${id})}" method="POST">
+		
+		<label for="nome">Nome:</label>
+		<input type="text" th:field="*{nome}">
+		
+		<label for="data_initial">data inicial:</label>
+		<input type="text" th:field="*{data_initial}">
+		
+		<label for="data-final">data final:</label>
+		<input type="text" th:field="*{data_final}">
+		
+		<label for="descricao">descrição:</label>
+		<input type="text" th:field="*{descricao}">
+		
+		<label for="local">local:</label>
+		<input type="text" th:field="*{local}">
+		
+		<label for="quantidade">quantidade pessoas:</label>
+		<input type="text" th:field="*{quantidade}">
+		
+		<label for="salario">Salary</label>
+		<select th:field="*{salario}">
+			<option th:each="salario : ${salarios}" th:value="${salario}" th:text="${salario}"></option>
+		</select>
+		
+		<input type="submit" value="Enviar">
+	</form>
+
+</body>
+</html>

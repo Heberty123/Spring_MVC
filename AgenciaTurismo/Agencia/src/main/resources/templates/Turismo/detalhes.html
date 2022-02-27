@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<h1>Detalhes: </h1>
+	
+	<h2>Id: <span th:text="${turismo.getId()}"></span></h2>
+	<h2>Nome: <span th:text="${turismo.getNome()}"></span></h2>
+	<h2>Data inicio: <span th:text="${turismo.getData_initial()}"></span></h2>
+	<h2>Data final: <span th:text="${turismo.getData_final()}"></span></h2>
+	<h2>quantidade: <span th:text="${turismo.getQuantidade()}"></span></h2>
+	<h2>local: <span th:text="${turismo.getLocal()}"></span></h2>
+	<h2>descricao: <span th:text="${turismo.getDescricao()}"></span></h2>
+	<h2>salario: <span th:text="${turismo.getSalario()}"></span></h2>
+	
+	<a href="javascript: history.go(-1)">Voltar página</a>
+
+	<h1>Outra coisa a ser feita (peoples "qtd")</h1>
+	
+</body>
+</html>
