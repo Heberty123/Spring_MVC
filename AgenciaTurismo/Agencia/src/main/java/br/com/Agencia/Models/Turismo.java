@@ -34,7 +34,7 @@ public class Turismo {
 	private String descricao;
 	@Column(nullable = false)
 	private SalarioEnum salario;
-	@OneToMany(mappedBy="People")
+	@OneToMany(mappedBy="people")
 	private List<People> peoples = new ArrayList<>();
 	
 	public Turismo() {}

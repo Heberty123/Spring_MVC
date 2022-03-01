@@ -86,8 +86,8 @@ public class ProfessorController {
 			Professor professor = optional.get();
 			requisicao.fromProfessor(professor);
 			
-			ModelAndView mv = new ModelAndView("Professores/edit");
-			mv.addObject("professorId", professor.getId());
+			ModelAndView mv = new ModelAndView("professores/edit");
+			mv.addObject("id", professor.getId());
 			mv.addObject("listaStatusProfessor", StatusProfessor.values());
 			return mv;
 		}
@@ -96,6 +96,26 @@ public class ProfessorController {
 			System.out.println("$$$$$$$$$$$$$$$$$ NÃO ACHOU O PROFESSOR DE ID " + id + 	"$$$$$$$$$$$$$$$$");
 			return new ModelAndView("redirect:/professores");
 		}
+		
+	}
+	
+	@PostMapping("/{id}/alterar")
+	public ModelAndView alterar(@PathVariable Long id, RequisicaoFormProfessor requisicao) {
+		ModelAndView mv = new ModelAndView("redirect:/professores");
+		Professor professor = requisicao.toProfessor();
+		professor.setId(id);
+		this.professorRepository.save(professor);
+		return mv;
+	}
+	
+	
+	
+	@GetMapping("/{id}/delete")
+	public ModelAndView delete(@PathVariable Long id, RequisicaoFormProfessor requisicao) {
+		this.professorRepository.deleteById(id);
+
+			return new ModelAndView("redirect:/professores");
+
 		
 	}
 }
