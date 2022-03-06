@@ -9,7 +9,6 @@ public class RequisicaoTurismo {
 	private Long id;
 	private String nome;
 	private String local;
-	private int quantidade;
 	private String data_initial;
 	private String data_final;
 	private String descricao;
@@ -27,12 +26,6 @@ public class RequisicaoTurismo {
 	}
 	public void setLocal(String local) {
 		this.local = local;
-	}
-	public int getQuantidade() {
-		return quantidade;
-	}
-	public void setQuantidade(int quantidade) {
-		this.quantidade = quantidade;
 	}
 	public String getData_initial() {
 		return data_initial;

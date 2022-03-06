@@ -5,11 +5,14 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
 import br.com.Agencia.DTO.RequisicaoTurismo;
@@ -25,8 +28,6 @@ public class Turismo {
 	@Column(nullable = false)
 	private String local;
 	@Column(nullable = false)
-	private int quantidade;
-	@Column(nullable = false)
 	private Date data_initial;
 	@Column(nullable = false)
 	private Date data_final;
@@ -34,17 +35,18 @@ public class Turismo {
 	private String descricao;
 	@Column(nullable = false)
 	private SalarioEnum salario;
-	@OneToMany(mappedBy="people")
+	@OneToMany(mappedBy="turismo", cascade = CascadeType.ALL)
 	private List<People> peoples = new ArrayList<>();
+	@ManyToOne
+	private Continente continente;
 	
 	public Turismo() {}
 	
 
-	public Turismo(String nome, String local, int quantidade, Date data_initial, Date data_final, String descricao,
+	public Turismo(String nome, String local, Date data_initial, Date data_final, String descricao,
 			SalarioEnum salario) {
 		this.nome = nome;
 		this.local = local;
-		this.quantidade = quantidade;
 		this.data_initial = data_initial;
 		this.data_final = data_final;
 		this.descricao = descricao;
@@ -63,12 +65,6 @@ public class Turismo {
 	}
 	public void setLocal(String local) {
 		this.local = local;
-	}
-	public int getQuantidade() {
-		return quantidade;
-	}
-	public void setQuantidade(int quantidade) {
-		this.quantidade = quantidade;
 	}
 	public Date getData_initial() {
 		return data_initial;
@@ -109,7 +105,6 @@ public class Turismo {
 		this.data_final = simpleDateFormat.parse(RTurismo.getData_final());
 		this.descricao = RTurismo.getDescricao();
 		this.local = RTurismo.getLocal();
-		this.quantidade = RTurismo.getQuantidade();
 		this.salario = RTurismo.getSalario();
 		
 	}
@@ -124,7 +119,6 @@ public class Turismo {
 		RTurismo.setDescricao(this.descricao);
 		RTurismo.setLocal(this.local);
 		RTurismo.setNome(this.nome);
-		RTurismo.setQuantidade(this.quantidade);
 		RTurismo.setSalario(this.salario);
 	}
 	

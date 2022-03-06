@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	
+	<h1>editanto turista ID: <span th:text="${id}">id</span></h1>
+	
+	<form th:object="${requisicaoPeople}" th:action="@{/People/alterar/{peopleId}(peopleId = ${id})}" method="POST">
+	
+		<label for="nome">Nome:</label>
+		<input type="text" th:field="*{nome}">
+		
+		<label for="data_initial">Idade:</label>
+		<input type="text" th:field="*{idade}">
+		
+		<label for="data-final">CPF:</label>
+		<input type="text" th:field="*{cpf}">
+		
+		<label for="descricao">birthday:</label>
+		<input type="text" th:field="*{birthday}">
+		
+		<input type="submit" value="enviar">
+	
+	</form>
+	
+	<a href="javascript:history.back()">Voltar</a>
+</body>
+</html>

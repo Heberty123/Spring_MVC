@@ -13,7 +13,6 @@
                     <th scope="col">Nome</th>
                     <th scope="col">data Inicio</th>
                     <th scope="col">data final</th>
-                    <th scope="col">quantidade</th>
                     <th scope="col">local</th>
                     <th scope="col">descricao</th>
                     <th scope="col">Salário</th>
@@ -26,16 +25,17 @@
                     <th class="col-1" scope="row" th:text="${turismo.getNome()}">Nome</th>
                     <td class="col-4" th:text="${turismo.getData_initial}">Nome do Professor</td>
                     <td class="col-2" th:text="${turismo.getData_final}">Salário</td>
-                    <td class="col-2" th:text="${turismo.getQuantidade()}">Quantidade</td>
                     <td class="col-2" th:text="${turismo.getLocal()}">Local</td>
                     <td class="col-2" th:text="${turismo.getDescricao()}">Descricao</td>
                     <td class="col-2" th:text="${turismo.getSalario()}">Salario</td>
+                    <td class="col-1"><a th:href="@{/People/{turismoId}(turismoId = ${turismo.getId()})}">Turistas</a></td>
                     <td class="col-1"><a th:href="@{/Turismo/{turismoId}(turismoId = ${turismo.getId()})}">Detalhes</a></td>
                     <td class="col-1"><a th:href="@{/Turismo/edit/{turismoId}(turismoId = ${turismo.getId()})}">Editar</a></td>
                     <td class="col-1"><a th:href="@{/Turismo/delete/{turismoId}(turismoId = ${turismo.getId()})}">Deletar</a></td>
                 </tr>
                 </tbody>
             </table>  
-
+		
+			<a th:href="@{/Turismo/}">Home</a>
 </body>
 </html>
