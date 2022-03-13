@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+
+	<h1>Mais detalhes sobre turista id: <span th:text="${id}"></span></h1>
+	
+	
+	<h1>Nome <span th:text="${requisicaoPeople.getNome()}"></span></h1>
+	<h1>Idade <span th:text="${requisicaoPeople.getIdade()}"></span></h1>
+	<h1>CPF <span th:text="${requisicaoPeople.getCpf()}"></span></h1>
+	<h1>Birthday <span th:text="${requisicaoPeople.getBirthday()}"></span></h1>
+	
+	<a href="javascript:history.back()">Voltar</a>
+	<a th:href="@{/People/editar/{peopleId}(peopleId = ${id})}">editar</a>
+</body>
+</html>

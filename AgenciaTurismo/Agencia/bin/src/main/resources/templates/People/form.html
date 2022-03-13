@@ -1,0 +1,32 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+
+	<h1>Adicionando mais turistas no Turismo ID: <span th:text="${id}">id</span></h1>
+	
+	<form th:object="${RequisicaoPeople}" th:action="@{/People/add/{turismoId}(turismoId = ${id})}" method="POST">
+	
+		<label for="nome">Nome:</label>
+		<input type="text" name="nome">
+		
+		<label for="data_initial">Idade:</label>
+		<input type="text" name="idade">
+		
+		<label for="data-final">CPF:</label>
+		<input type="text" name="cpf">
+		
+		<label for="descricao">birthday:</label>
+		<input type="text" name="birthday">
+		
+		<input type="submit" value="enviar">
+	
+	</form>
+	
+	<a href="javascript:history.back()">Voltar</a>
+</body>
+</html>

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	
+	<h1 th:text="${turismo.getNome()}"></h1>
+	
+	<br/>
+	<br />
+	<h2>Lista de turistas que vao participar dessa viagem ! id: <span th:text="${turismo.getId()}"></span></h2>
+	<br />
+			    <table class="">
+                <thead>
+                <tr>
+                    <th scope="col">ID</th>
+                    <th scope="col">Nome</th>
+                    <th scope="col">Idade</th>
+                    <th scope="col">cpf</th>
+                    <th scope="col">birtday</th>
+
+                    <th scope="col">Ações</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="people : ${lista}">
+      		        <th class="col-1" scope="row" th:text="${people.getId()}">ID</th>    
+                    <th class="col-1" scope="row" th:text="${people.getNome()}">Nome</th>
+                    <td class="col-2" th:text="${people.getIdade()}">Idade</td>
+                    <td class="col-2" th:text="${people.getCpf()}">CPF</td>   
+                    <td class="col-2" th:text="${people.getBirthday()}">Birthday</td>
+
+                    <td class="col-1"><a th:href="@{/People/detalhes/{peopleId}(peopleId = ${people.getId()})}">Detalhes</a></td>
+                    <td class="col-1"><a th:href="@{/People/editar/{peopleId}(peopleId = ${people.getId()})}">Editar</a></td>
+                    <td class="col-1"><a th:href="@{/People/delete/{peopleId}(peopleId = ${people.getId()})}">Deletar</a></td>
+
+                </tr>
+                </tbody>
+            </table> 
+            
+            <a th:href="@{/Turismo/listar}">Voltar para a lista</a>
+            <a th:href="@{/People/form/{turismoId}(turismoId = ${turismo.getId()})}">Adicionar mais Pessoas</a>
+</body>
+</html>
