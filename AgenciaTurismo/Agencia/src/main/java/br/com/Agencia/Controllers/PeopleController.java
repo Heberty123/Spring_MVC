@@ -1,9 +1,11 @@
 package br.com.Agencia.Controllers;
 
 import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import javax.transaction.Transactional;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,13 +42,17 @@ public class PeopleController {
 		mv.addObject("turismo", turismo);
 	
 		
-		List<People> peoples = this.peopleRepository.findAllByIdTurismo(id);
+/*		List<People> peoples = this.peopleRepository.findAllByIdTurismo(id);
 		
 		System.out.println("Lista de people! da viagem para " + turismo.getNome());
 		for (People people : peoples) {
 			System.out.println("name -> " + people.getNome());
 		}
 		
+		mv.addObject("lista", peoples);
+*/
+		
+		List<People> peoples = turismo.getPeoples();
 		mv.addObject("lista", peoples);
 		
 		return mv;

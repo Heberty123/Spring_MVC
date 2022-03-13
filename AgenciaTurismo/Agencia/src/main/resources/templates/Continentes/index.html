@@ -5,6 +5,10 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<h1>Continentes !</h1>
+	<h1>Temos !</h1>
+	
+	<ul>
+		<li th:each="continente : ${lista}"><h2 th:text="${continente.getId()}"></h2> <h2 th:text="${continente.getNome()}"></h2></li>
+	</ul>
 </body>
 </html>
