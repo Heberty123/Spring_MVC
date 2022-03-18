@@ -78,6 +78,10 @@ public class TurismoController {
 		List<Turismo> lista = this.turismoRepository.findAll();
 		mv.addObject("lista", lista);
 		
+		List<String[]> strings = this.turismoRepository.findTurismoAllWithContinente();
+		String[] primeirodalista =  strings.get(0);
+		System.out.println("Id: " + primeirodalista[0] + ", nome: " + primeirodalista[1] + ", continente: " + primeirodalista[2]);
+		
 		return mv;
 	}
 	
