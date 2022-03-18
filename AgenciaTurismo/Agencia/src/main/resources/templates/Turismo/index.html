@@ -11,5 +11,31 @@
 	
 	<h1>Olá Turismo</h1>
 	<a href="/Turismo/formulario">Turismo</a>
+	
+	<br>
+	<br>
+	
+	<h1>Pesquisar</h1>
+	
+	<form th:action="@{/Pesquisa/escolheu}" method="POST">
+	<h2>O que pesquisar?</h2>
+	
+		<select th:name="opcao" required="required">
+			<option th:value="people">People</option>
+			<option th:value="turismo">Turismo</option>
+			<option th:value="continente">Continentes</option>
+		</select>
+		
+		<label>Digite o nome <span id="title-pesquisa"></span>: </label>
+		<input type="text" th:name="input-pesquisa">
+		
+		<input type="submit">
+		
+	</form>
+	
+	<div>
+	
+	</div>
+
 </body>
 </html>

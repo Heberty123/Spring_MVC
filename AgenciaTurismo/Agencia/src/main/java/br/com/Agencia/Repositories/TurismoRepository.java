@@ -22,6 +22,9 @@ public interface TurismoRepository extends JpaRepository<Turismo, Long>{
     @Query("SELECT u.id, u.nome, u.data_initial, u.data_final, u.descricao, u.salario, c.nome FROM Turismo u INNER JOIN u.continente c WHERE u.id = :id")
     String findTurismoWithContinenteById(Long id);
     
+    @Query("SELECT u.id, u.nome, u.data_initial, u.data_final, u.descricao, u.salario, c.nome FROM Turismo u INNER JOIN u.continente c WHERE u.nome LIKE %?1%")
+    List<String> findTurismoWithContinenteByName(String nome);
+    
     @Query("SELECT c.nome FROM Turismo u INNER JOIN u.continente c WHERE u.id = :id")
     Continente findContineteOfTurismoById(Long id);
 }

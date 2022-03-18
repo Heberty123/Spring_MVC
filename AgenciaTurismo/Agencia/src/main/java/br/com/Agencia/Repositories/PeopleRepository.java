@@ -23,5 +23,7 @@ public interface PeopleRepository extends JpaRepository<People, Long> {
 	/*select book from Book book inner join book.chapters chapter where chapter.title like '%hibernate%'*/
 	
 	
-
+	@Query("SELECT u.id, u.nome, u.idade, u.cpf, u.birthday, t.nome, c.nome FROM People u INNER JOIN u.turismo t INNER JOIN t.continente c WHERE u.nome LIKE %?1%")
+    List<String> findPeopleByName(String nome);
+	
 }
