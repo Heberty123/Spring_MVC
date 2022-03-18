@@ -22,17 +22,17 @@
                 </thead>
                 <tbody>
                 <tr th:each="turismo : ${lista}">
-                    <th class="col-1" scope="row" th:text="${turismo.getId()}">ID</th>
-                    <th class="col-1" scope="row" th:text="${turismo.getNome()}">Nome</th>
-                    <td class="col-4" th:text="${turismo.getData_initial}">Nome do Professor</td>
-                    <td class="col-2" th:text="${turismo.getData_final}">Salário</td>
-                    <td class="col-2" th:text="${turismo.getLocal()}">Local</td>
-                    <td class="col-2" th:text="${turismo.getDescricao()}">Descricao</td>
-                    <td class="col-2" th:text="${turismo.getSalario()}">Salario</td>
-                    <td class="col-1"><a th:href="@{/People/{turismoId}(turismoId = ${turismo.getId()})}">Turistas</a></td>
-                    <td class="col-1"><a th:href="@{/Turismo/{turismoId}(turismoId = ${turismo.getId()})}">Detalhes</a></td>
-                    <td class="col-1"><a th:href="@{/Turismo/edit/{turismoId}(turismoId = ${turismo.getId()})}">Editar</a></td>
-                    <td class="col-1"><a th:href="@{/Turismo/delete/{turismoId}(turismoId = ${turismo.getId()})}">Deletar</a></td>
+                    <th class="col-1" scope="row" th:text="${turismo[0]}">ID</th>
+                    <th class="col-1" scope="row" th:text="${turismo[1]}">Nome</th>
+                    <td class="col-4" th:text="${turismo[2]}">Nome do Professor</td>
+	                <td class="col-2" th:text="${turismo[3]}">Salário</td>
+                    <td class="col-2" th:text="${turismo[4]}">Local</td>
+                    <td class="col-2" th:text="${turismo[5]}">Descricao</td>
+                    <td class="col-2" th:text="${turismo[6]}">Salario</td>
+                    <td class="col-1"><a th:href="@{/People/{turismoId}(turismoId = ${turismo[0]})}">Turistas</a></td>
+                    <td class="col-1"><a th:href="@{/Turismo/{turismoId}(turismoId = ${turismo[0]})}">Detalhes</a></td>
+                    <td class="col-1"><a th:href="@{/Turismo/edit/{turismoId}(turismoId = ${turismo[0]})}">Editar</a></td>
+                    <td class="col-1"><a th:href="@{/Turismo/delete/{turismoId}(turismoId = ${turismo[0]})}">Deletar</a></td> 
                 </tr>
                 </tbody>
             </table>  

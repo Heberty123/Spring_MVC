@@ -75,46 +75,48 @@ public class TurismoController {
 	@GetMapping("/listar")
 	public ModelAndView listar() {
 		ModelAndView mv = new ModelAndView("Turismo/listaViagens.html");
-		List<Turismo> lista = this.turismoRepository.findAll();
-		mv.addObject("lista", lista);
+//		List<Turismo> lista = this.turismoRepository.findAll();
 		
-		List<String[]> strings = this.turismoRepository.findTurismoAllWithContinente();
-		String[] primeirodalista =  strings.get(0);
-		System.out.println("Id: " + primeirodalista[0] + ", nome: " + primeirodalista[1] + ", continente: " + primeirodalista[2]);
+		List<String[]> lista = this.turismoRepository.findTurismoAllWithContinente();
+		
+		mv.addObject("lista", lista);
 		
 		return mv;
 	}
 	
 	///Turismo/{turismoId}
 	@GetMapping("/{id}")
-	public ModelAndView detalhes(@PathVariable Long id, Turismo turismo) {
+	public ModelAndView detalhes(@PathVariable Long id) {
 		
-		Optional<Turismo> optional = this.turismoRepository.findById(id);
+		String string = this.turismoRepository.findTurismoWithContinenteById(id);
+		String[] turismo = string.split(",");
 		
-		if(optional.isPresent()) {
-			turismo = optional.get();
 			ModelAndView mv = new ModelAndView("Turismo/detalhes.html");
 			mv.addObject("turismo", turismo);
+			
 			return mv;
-		}
-		else {
-			return new ModelAndView("redirect:/Turismo/listar");
-		}
+
 	}
 	
 	
 	///Turismo/edit/{turismoId}
 	@GetMapping("/edit/{id}")
-	public ModelAndView editar(@PathVariable Long id, RequisicaoTurismo requisicaoTurismo) {
+	public ModelAndView editar(@PathVariable Long id, RequisicaoTurismo requisicaoTurismo, RequisicaoContinente requisicaoContinente) {
 		Optional<Turismo> optional = this.turismoRepository.findById(id);
+		Continente continente = this.turismoRepository.findContineteOfTurismoById(id);
+
 		
 		if(optional.isPresent()) {
 			Turismo turismo = optional.get();
 			turismo.toReqTurismo(requisicaoTurismo);
-			ModelAndView mv = new ModelAndView("Turismo/edit.html");
+//			requisicaoContinente.fromContinente(continente);
 			List<SalarioEnum> salarios = Arrays.asList(SalarioEnum.values());
+			List<Continente> lista_continentes = this.continenteRepository.findAll();
+			ModelAndView mv = new ModelAndView("Turismo/edit.html");
 			mv.addObject("salarios", salarios);
 			mv.addObject("id", turismo.getId());
+			mv.addObject("lista_continente", lista_continentes);
+			
 			return mv;
 		}
 		else {
@@ -124,10 +126,12 @@ public class TurismoController {
 	
 	
 	@PostMapping("/edit/{id}")
-	public ModelAndView edit(@Valid RequisicaoTurismo requisicaoTurismo, @PathVariable Long id) throws ParseException {
+	public ModelAndView edit(@Valid RequisicaoTurismo requisicaoTurismo, @Valid RequisicaoContinente requisicaoContinente , @PathVariable Long id) throws ParseException {
 		Turismo turismo = new Turismo();
+		Continente continente = this.continenteRepository.findContinenteByName(requisicaoContinente.getNomecontinente());
 		requisicaoTurismo.setId(id);
 		turismo.fromReqTurismo(requisicaoTurismo);
+		turismo.setContinente(continente);
 		this.turismoRepository.save(turismo);
 		
 		return new ModelAndView("redirect:/Turismo/listar");

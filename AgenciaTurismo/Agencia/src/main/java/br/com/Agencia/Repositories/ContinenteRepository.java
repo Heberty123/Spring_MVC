@@ -9,4 +9,6 @@ public interface ContinenteRepository extends JpaRepository<Continente, Long> {
 
 	@Query("SELECT u FROM Continente u WHERE u.nome = :nome")
     Continente findContinenteByName(String nome);
+
+
 }
