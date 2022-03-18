@@ -23,7 +23,7 @@ public class Continente {
 	private Long id;
 	@Column(nullable = false)
 	private String nome;
-	@OneToMany(mappedBy="continente", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy="continente")
 	private List<Turismo> turismos = new ArrayList<Turismo>();
 	
 	

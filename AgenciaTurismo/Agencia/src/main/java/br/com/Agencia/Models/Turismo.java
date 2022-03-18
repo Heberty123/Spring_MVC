@@ -97,6 +97,12 @@ public class Turismo {
 	public List<People> getPeoples() {
 		return peoples;
 	}
+	public Continente getContinente() {
+		return continente;
+	}
+	public void setContinente(Continente continente) {
+		this.continente = continente;
+	}
 
 
 	public void fromReqTurismo(RequisicaoTurismo RTurismo) throws ParseException {

@@ -1,6 +1,6 @@
 package br.com.Agencia.DTO;
 
-import java.util.Date;
+import br.com.Agencia.Models.Continente;
 import br.com.Agencia.Models.SalarioEnum;
 
 public class RequisicaoTurismo {
@@ -57,7 +57,8 @@ public class RequisicaoTurismo {
 	public void setId(Long id) {
 		this.id = id;
 	}
+
 	
-	
+
 	
 }	

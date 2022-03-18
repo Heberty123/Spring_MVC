@@ -12,4 +12,7 @@ public interface TurismoRepository extends JpaRepository<Turismo, Long>{
 	
 	@Query("SELECT u FROM Turismo u INNER JOIN u.peoples p WHERE p.id = :id")
     Turismo findTurismoByIdOfPeople(Long id);
+	
+	@Query("SELECT u FROM Turismo u INNER JOIN u.peoples p WHERE p.id = :id")
+    Turismo findTurismoByIdOfPeople(Long id);
 }

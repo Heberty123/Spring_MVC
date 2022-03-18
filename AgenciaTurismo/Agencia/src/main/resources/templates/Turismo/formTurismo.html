@@ -28,6 +28,12 @@
 			<option th:each="salario : ${salarios}" th:value="${salario}" th:text="${salario}"></option>
 		</select>
 		
+		
+		<label for="nomecontinente">Continente</label>
+		<select name="nomecontinente">
+			<option th:each="continente : ${continentes}" th:value="${continente.getNome()}" th:text="${continente.getNome()}"></option>
+		</select>
+		
 		<input type="submit" value="Enviar">
 	</form>
 </body>
