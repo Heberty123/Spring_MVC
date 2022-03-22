@@ -27,13 +27,39 @@
 		</select>
 		
 		<label>Digite o nome <span id="title-pesquisa"></span>: </label>
-		<input type="text" th:name="input-pesquisa">
+		<input type="text" th:name="input-pesquisa" required="required">
 		
 		<input type="submit">
 		
 	</form>
 	
 	<div>
+		<h2>Pesquisadas: </h2>
+		<table>
+			<thead>
+                <tr>
+                    <th scope="col">ID</th>
+                    <th scope="col">Nome</th>
+                    <th scope="col">data Inicio</th>
+                    <th scope="col">data final</th>
+                    <th scope="col">local</th>
+                    <th scope="col">descricao</th>
+                    <th scope="col">Salário</th>
+                    <th scope="col">Continente</th>
+                    <th scope="col">Ações</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="var : ${lista}">
+                    <th class="col-1" scope="row" th:text="${var[0]}">ID</th>
+                    <th class="col-1" scope="row" th:text="${var[1]}">Nome</th>
+                    <td class="col-4" th:text="${var[2]}">Nome do Professor</td>
+	                <td class="col-2" th:text="${var[3]}">Salário</td>
+                    <td class="col-2" th:text="${var[4]}">Local</td>
+                    <td class="col-2" th:text="${var[5]}">Descricao</td>
+                </tr>
+                </tbody>
+		</table>
 	
 	</div>
 

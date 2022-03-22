@@ -1,7 +1,9 @@
 package br.com.Agencia.Controllers;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import org.hibernate.internal.build.AllowSysOut;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -29,30 +31,40 @@ public class PesquisaController {
 	
 	@PostMapping("/escolheu")
 	public ModelAndView pesPeople(@RequestParam("opcao") String param, @RequestParam("input-pesquisa") String pesquisa) {
+		ModelAndView mv = new ModelAndView();
+		
+		List<String> lista = null;
+		List<String[]> otherlist = new ArrayList<>();
 		
 		if(param.equals("people")) {
 			System.out.println("\n\nVocê chamou people");
 			
-			List<String> people = this.peopleRepository.findPeopleByName(pesquisa);
-			System.out.println(people);
+			lista = this.peopleRepository.findPeopleByName(pesquisa);
 			
+			for(int i = 0; i<lista.size(); i++) {
+				otherlist.add(lista.get(i).split(","));
+			}
+			
+			System.out.println(otherlist.get(0)[1]);
+			
+			mv.addObject("lista", otherlist);
 			
 		}
 		else if(param.equals("turismo")) {
 			System.out.println("\n\nVocê chamou turismo");
 			
-			List<String> turismos = this.turismoRepository.findTurismoWithContinenteByName(pesquisa);
-			System.out.println(turismos);
+			lista = this.turismoRepository.findTurismoWithContinenteByName(pesquisa);
+			System.out.println(lista);
 		}
 		else {
 			System.out.println("Continente");
 			
-			List<String> continente = this.continenteRepository.findContinentesWithManyTurismoByName(pesquisa);
-			System.out.println(continente);
+			lista = this.continenteRepository.findContinentesWithManyTurismoByName(pesquisa);
+			System.out.println(lista);
 		}
 		
 		System.out.println("Voce entrou na pesquisa");
-		return new ModelAndView("People/pesquisaPeople.html");
+		return new ModelAndView("Turismo/index.html");
 	}
 
 
