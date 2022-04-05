@@ -6,5 +6,6 @@
 
 <span style="color:red">some **This is Red Bold.** text</span>
 <span style="color: blue">some *blue* text</span>.
+<font color='red'>test blue color font</font>
 
 
