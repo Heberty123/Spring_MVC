@@ -4,7 +4,7 @@
 
 ## Este é o meu repositório de Spring boot, um framework de Java. Tenho conhecimentos avançado em java e agora estou consolidando ainda mais meu conhecimentos mergulhando a fundo no mundo de Spring boot !
 
-
+<span style="color:red">some **This is Red Bold.** text</span>
 <span style="color: blue">some *blue* text</span>.
 
 
