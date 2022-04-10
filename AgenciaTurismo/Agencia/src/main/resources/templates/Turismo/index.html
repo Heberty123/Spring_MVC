@@ -51,7 +51,7 @@
                 </thead>
                 <tbody>
                 <tr th:each="var : ${lista}">
-                    <th class="col-1" scope="row" th:text="${var[0]}">ID</th>
+                    <th class="col-1" scope="row" th:text="${var[0][0]}">ID</th>
                     <th class="col-1" scope="row" th:text="${var[1]}">Nome</th>
                     <td class="col-4" th:text="${var[2]}">Nome do Professor</td>
 	                <td class="col-2" th:text="${var[3]}">Salário</td>
@@ -60,6 +60,10 @@
                 </tr>
                 </tbody>
 		</table>
+	
+		
+		
+	
 	
 	</div>
 

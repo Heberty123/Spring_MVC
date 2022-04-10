@@ -3,16 +3,12 @@ package br.com.Agencia.Controllers;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.hibernate.internal.build.AllowSysOut;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
-
-import br.com.Agencia.Models.People;
 import br.com.Agencia.Repositories.ContinenteRepository;
 import br.com.Agencia.Repositories.PeopleRepository;
 import br.com.Agencia.Repositories.TurismoRepository;
@@ -33,7 +29,7 @@ public class PesquisaController {
 	public ModelAndView pesPeople(@RequestParam("opcao") String param, @RequestParam("input-pesquisa") String pesquisa) {
 		ModelAndView mv = new ModelAndView();
 		
-		List<String> lista = null;
+		List<String> lista = new ArrayList<String>();
 		List<String[]> otherlist = new ArrayList<>();
 		
 		if(param.equals("people")) {
@@ -46,6 +42,8 @@ public class PesquisaController {
 			}
 			
 			System.out.println(otherlist.get(0)[1]);
+			System.out.println(otherlist.get(1)[1]);
+			System.out.println(otherlist.get(2)[1]);
 			
 			mv.addObject("lista", otherlist);
 			
