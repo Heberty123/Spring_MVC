@@ -1,0 +1,75 @@
+*{
+	box-sizing: border-box;
+}
+
+body{
+}
+
+
+.form-cliente{
+	height: 40vh;	
+	max-width: 1200px;
+	margin: 0 auto;
+}
+
+.form-cliente h2{
+	font-size: 2.2rem;	
+	margin-bottom: 20px;
+}
+
+.form-cliente h3{
+	font-size: 2rem;
+	margin-bottom: 40px;	
+}
+
+.form-cliente form{
+	display: grid;
+	gap: 30px;	
+}
+
+.form-endereco{
+	height: 60vh;
+	max-width: 1200px;
+	margin: 0 auto;
+}
+
+.form-endereco h3{
+	font-size: 2rem;
+	margin-bottom: 35px;
+	text-align: center;
+}
+
+.form-endereco form{
+	display: grid;
+	grid-template-columns: 1fr 1fr 1fr;
+	gap: 20px 40px;
+}
+
+.form-endereco form input{
+	width: 100%;
+	height: 100%;
+	box-sizing: border-box;
+}
+
+.descricao{
+	grid-column: 3;
+	grid-row: span 2;
+}
+
+.window-block{
+	background-color: cornflowerblue;
+	position: fixed;
+	opacity: .6;
+	width: 100vw;
+	height: 60vh;
+	bottom: 0px;
+	display: grid;
+	align-items: flex-end;
+	justify-content: center;
+}
+
+.window-block > div > h2, .window-block > div > h3{
+	font-size: 4rem;
+}
+
+
