@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+<div class="container">
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">id</th>
+      <th scope="col">nome</th>
+      <th scope="col">cpf</th>
+      <th scope="col">descricao</th>
+      <th scope="col">Endereços</th>
+      <th scope="col">Produtos</th>
+      <th scope="col">Editar</th>
+      <th scope="col">Deletar</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr th:each="cliente : ${lista}">
+      <th th:text="${cliente.id}">id</th>
+      <td th:text="${cliente.nome}">nome</td>
+      <td th:text="${cliente.cpf}">cpf</td>
+      <td th:text="${cliente.descricao}">descricao</td>
+      <td><a th:href="@{/Endereco/lista/{id}(id = ${cliente.id})}">Endereços</a></td>
+      <td><a th:href="@{/Produto/produtos/{id}(id = ${cliente.id})}">Produto</a></td>
+      <td><a th:href="@{/Cliente/edit/{id}(id = ${cliente.id})}">Editar</a></td>
+      <td><a th:href="@{/Cliente/delete/{id}(id = ${cliente.id})}">Deletar</a></td>
+    </tr>
+  </tbody>
+</table>	
+	<h2 th:if="${aviso}">O cpf já existe</h2>
+	<a class="btn btn-primary" th:href="@{/Cliente/incluir}">Adicionar clientes</a>
+	<a class="btn btn-primary" th:href="@{/Produto/listar}">Listar Produtos</a>
+	<a class="btn btn-primary" th:href="@{/Produto/incluir}">Adicionar Produtos</a>
+</div>
+
+	
+</body>
+</html>

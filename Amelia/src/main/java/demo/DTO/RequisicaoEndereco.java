@@ -1,17 +1,9 @@
-package demo.Models;
+package demo.DTO;
 
+import demo.Models.Endereco;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+public class RequisicaoEndereco {
 
-@Entity
-public class Endereco {
-
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	private String rua;
 	private String bairro;
@@ -22,19 +14,19 @@ public class Endereco {
 	private String descricao;
 	private Long telefone1;
 	private Long telefone2;
-	@ManyToOne
-	private Cliente cliente;
 	
-	public Endereco() {}
+	public RequisicaoEndereco() {}
 
-	public Endereco(String rua, String bairro, int numero, String cidade, int cep, String tipo,
-			Long telefone1, Long telefone2) {
+	public RequisicaoEndereco(Long id, String rua, String bairro, int numero, String cidade, int cep, String tipo,
+			String descricao, Long telefone1, Long telefone2) {
+		this.id = id;
 		this.rua = rua;
 		this.bairro = bairro;
 		this.numero = numero;
 		this.cidade = cidade;
 		this.cep = cep;
 		this.tipo = tipo;
+		this.descricao = descricao;
 		this.telefone1 = telefone1;
 		this.telefone2 = telefone2;
 	}
@@ -95,7 +87,6 @@ public class Endereco {
 		this.tipo = tipo;
 	}
 
-
 	public String getDescricao() {
 		return descricao;
 	}
@@ -119,14 +110,20 @@ public class Endereco {
 	public void setTelefone2(Long telefone2) {
 		this.telefone2 = telefone2;
 	}
-
-	public Cliente getCliente() {
-		return cliente;
-	}
-
-	public void setCliente(Cliente cliente) {
-		this.cliente = cliente;
-	}
 	
-
+	public Endereco toEndereco() {
+		Endereco endereco = new Endereco();
+		
+		endereco.setRua(this.rua);
+		endereco.setBairro(this.bairro);
+		endereco.setNumero(this.numero);
+		endereco.setCidade(this.cidade);
+		endereco.setCep(this.cep);
+		endereco.setTipo(this.tipo);
+		endereco.setDescricao(this.descricao);
+		endereco.setTelefone1(this.telefone1);
+		endereco.setTelefone2(this.telefone2);
+		
+		return endereco;
+	}
 }

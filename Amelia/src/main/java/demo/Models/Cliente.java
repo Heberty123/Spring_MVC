@@ -1,8 +1,11 @@
 package demo.Models;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
-
+import java.util.Set;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -28,7 +31,7 @@ public class Cliente {
 	@OneToMany(mappedBy="cliente"/*, cascade = CascadeType.ALL, fetch = FetchType.LAZY*/)
 	private List<Endereco> enderecos = new ArrayList<Endereco>();
 	
-	@ManyToMany(/*fetch = FetchType.LAZY, cascade = CascadeType.PERSIST*/)
+	@ManyToMany	
     @JoinTable(name = "clientes_produtos",
             joinColumns = {
                     @JoinColumn(name = "client_id", referencedColumnName = "id",
@@ -87,4 +90,18 @@ public class Cliente {
 		return req;
 	}
 	
+	public void AdicionarProduto(Produto produto) {
+		this.produtos.add(produto);
+		
+	}
+	
+	public void RemoverProduto(Produto produto) {
+		this.produtos.remove(produto);
+	}
+
+	public void RemoverEndereco(Endereco endereco) {
+		this.enderecos.remove(endereco);
+		
+	}
+
 }
