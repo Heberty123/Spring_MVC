@@ -20,8 +20,9 @@
 			  <input class="form-control" th:classappend="${isInvalid} ? is-invalid : is-valid" type="file" id="formFile" name="file">
 			  <div th:text="${erro}" id="formFile" class="invalid-feedback"></div>
 			</div>
-			<div class="mb-3">
-				<button type="submit" class="btn btn-primary">Submit</button>
+			<div class="mb-3 row">
+				<button type="submit" class="btn btn-primary col col-auto me-3" style="width: 85px;">Enviar</button>
+				<a th:href="@{/Home/importacoes}" type="button" class="btn btn-primary col col-auto">Ver importações realizadas</a>
 			</div>
 		</form>
 		
@@ -77,7 +78,7 @@
 			      <td th:text="${transacao.agenciaDestino}">Mark</td>
 			      <td th:text="${transacao.contaDestino}">Mark</td>
 			      <td th:text="${transacao.valor}">Mark</td>
-			      <td th:text="${transacao.data}">Mark</td>
+			      <td th:text="${#dates.format(transacao.data, 'dd/MM/yyyy')}">Mark</td>
 			    </tr>
 			  </tbody>
 			</table>
@@ -88,7 +89,7 @@
 		</div>
 		
 			<div class="row">
-						<div th:classappend="${erroDate} ? d-block : d-none" class="mt-3 col p-8">
+						<div th:classappend="${erroDate} ? d-block : d-none"  class="mt-3 col p-8">
 							<h2>Transações com data diferente que não foram persistida !</h2>
 							
 							
@@ -114,7 +115,7 @@
 							      <td th:text="${transacao.agenciaDestino}">Mark</td>
 							      <td th:text="${transacao.contaDestino}">Mark</td>
 							      <td th:text="${transacao.valor}">Mark</td>
-							      <td class="table-warning" th:text="${transacao.data}">Mark</td>
+							      <td class="table-warning" th:text="${#dates.format(transacao.data, 'dd/MM/yyyy')}">Mark</td>
 							    </tr>
 							  </tbody>
 							</table>
@@ -139,20 +140,23 @@
 							  </thead>
 							  <tbody>
 							    <tr th:each="transacao : ${listaErroNull}">
-							      <td th:classappend="${transacao.bancoOrigem} ? table-primary: table-warning" th:text="${transacao.bancoOrigem != null} ? ${transacao.bancoOrigem} : 'null value!'">Mark</td>
+							      <td th:classappend="${transacao.bancoOrigem != ''} ? table-primary: table-warning" th:text="${transacao.bancoOrigem != ''} ? ${transacao.bancoOrigem} : 'null value!'">Mark</td>
 							      <td th:classappend="${transacao.agenciaOrigem} ? table-primary : table-warning" th:text="${transacao.agenciaOrigem != null} ? ${transacao.agenciaOrigem} : 'null value!'">Mark</td>
-							      <td th:classappend="${transacao.contaOrigem} ? table-primary : table-warning" th:text="${transacao.contaOrigem != null} ? ${transacao.contaOrigem} : 'null value!'">Mark</td>
-							      <td th:classappend="${transacao.bancoDestino} ? table-primary : table-warning" th:text="${transacao.bancoDestino != null} ? ${transacao.bancoDestino} : 'null value!'">Mark</td>
+							      <td th:classappend="${transacao.contaOrigem != ''} ? table-primary : table-warning" th:text="${transacao.contaOrigem != ''} ? ${transacao.contaOrigem} : 'null value!'">Mark</td>
+							      <td th:classappend="${transacao.bancoDestino != ''} ? table-primary : table-warning" th:text="${transacao.bancoDestino != ''} ? ${transacao.bancoDestino} : 'null value!'">Mark</td>
 							      <td th:classappend="${transacao.agenciaDestino} ? table-primary : table-warning" th:text="${transacao.agenciaDestino != null} ? ${transacao.agenciaDestino} : 'null value!'">Mark</td>
-							      <td th:classappend="${transacao.contaDestino} ? table-primary : table-warning" th:text="${transacao.contaDestino != null} ? ${transacao.contaDestino} : 'null value!'">Mark</td>
+							      <td th:classappend="${transacao.contaDestino != ''} ? table-primary : table-warning" th:text="${transacao.contaDestino != ''} ? ${transacao.contaDestino} : 'null value!'">Mark</td>
 							      <td th:classappend="${transacao.valor} ? table-primary : table-warning" th:text="${transacao.valor != null} ? ${transacao.valor} : 'null value!'">Mark</td>
-							      <td th:classappend="${transacao.data} ? table-primary : table-warning" th:text="${transacao.data != null} ? ${transacao.data} : 'null value!'">Mark</td>
+							      <td th:classappend="${transacao.data} ? table-primary : table-warning" th:text="${transacao.data != null} ? ${#dates.format(transacao.data, 'dd/MM/yyyy')} : 'null value!'">Mark</td>
+							      																
 							    </tr>
 							  </tbody>
 							</table>
 						</div>
 
 		</div>
+		
+		
 
 	</section>
 	

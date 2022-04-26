@@ -1,10 +1,10 @@
 package transacao.Controllers;
 
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.Reader;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -16,9 +16,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import transacao.Models.Importacao;
 import transacao.Models.Transacao;
+import transacao.Repositories.RepositoryImportacao;
 import transacao.Repositories.RepositoryTransacao;
-import transacao.Service.*;
+import transacao.Service.ReadFile;
 
 @Controller
 @RequestMapping("/Home")
@@ -26,6 +28,9 @@ public class PrincipalController {
 	
 	@Autowired
 	RepositoryTransacao repositoryTransacao;
+	
+	@Autowired
+	RepositoryImportacao repositoryImportacao;
 
 	@RequestMapping("")
 	public String Principal() {
@@ -35,7 +40,7 @@ public class PrincipalController {
 	
 	
 	@PostMapping("/upload")
-	public ModelAndView File(@RequestParam("file") MultipartFile file) throws IOException {
+	public ModelAndView File(@RequestParam("file") MultipartFile file){
 		ModelAndView mv = new ModelAndView("Home/home.html");
 		
 		if(file.isEmpty()) {
@@ -86,10 +91,28 @@ public class PrincipalController {
 			return mv;
 		}
 		
+
 		for (Transacao transacao : lista) {
 			this.repositoryTransacao.save(transacao);
+			Importacao importacao = new Importacao(new Date(), transacao.getData());
+			this.repositoryImportacao.save(importacao);
 		}
+		
+		List<Importacao> listaImportacao = this.repositoryImportacao.findAll();
+		Collections.reverse(listaImportacao);
+		mv.addObject("listaImportacoes", listaImportacao);
 		
 		return mv;
 	}
+	
+	@RequestMapping("/importacoes")
+	public ModelAndView importacoes() {
+		ModelAndView mv = new ModelAndView("Home/importacoes.html");
+		List<Importacao> listaImportacao = this.repositoryImportacao.findAll();
+		Collections.reverse(listaImportacao);
+		mv.addObject("listaImportacoes", listaImportacao);
+		return mv;
+	}
+	
+	
 }
