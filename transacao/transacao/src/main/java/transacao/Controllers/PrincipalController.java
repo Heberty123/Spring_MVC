@@ -1,25 +1,27 @@
 package transacao.Controllers;
 
-
-import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.CurrentSecurityContext;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
-
 import transacao.Models.Importacao;
 import transacao.Models.Transacao;
+import transacao.Models.Usuario;
 import transacao.Repositories.RepositoryImportacao;
 import transacao.Repositories.RepositoryTransacao;
+import transacao.Repositories.RepositoryUser;
 import transacao.Service.ReadFile;
 
 @Controller
@@ -31,16 +33,22 @@ public class PrincipalController {
 	
 	@Autowired
 	RepositoryImportacao repositoryImportacao;
+	
+	@Autowired
+	RepositoryUser repositoryUser;
 
 	@RequestMapping("")
 	public String Principal() {
-		
 		return "Home/home.html";
 	}
 	
 	
 	@PostMapping("/upload")
-	public ModelAndView File(@RequestParam("file") MultipartFile file){
+	public ModelAndView File(@RequestParam("file") MultipartFile file, @CurrentSecurityContext(expression="authentication")
+    Authentication authentication){
+		
+		Usuario usuario = this.repositoryUser.findByUsername(authentication.getName());
+		
 		ModelAndView mv = new ModelAndView("Home/home.html");
 		
 		if(file.isEmpty()) {
@@ -91,11 +99,18 @@ public class PrincipalController {
 			return mv;
 		}
 		
+		Importacao importacao = null;
+		if(!lista.isEmpty()) {
+			importacao = new Importacao(new Date(), lista.get(0).getData());
+			importacao.setUsuario(usuario);
+			this.repositoryImportacao.save(importacao);
+		}
+		
 
 		for (Transacao transacao : lista) {
+			transacao.setImportacao(importacao);
 			this.repositoryTransacao.save(transacao);
-			Importacao importacao = new Importacao(new Date(), transacao.getData());
-			this.repositoryImportacao.save(importacao);
+			
 		}
 		
 		List<Importacao> listaImportacao = this.repositoryImportacao.findAll();
@@ -111,6 +126,22 @@ public class PrincipalController {
 		List<Importacao> listaImportacao = this.repositoryImportacao.findAll();
 		Collections.reverse(listaImportacao);
 		mv.addObject("listaImportacoes", listaImportacao);
+		return mv;
+	}
+	
+	
+	@RequestMapping("/detalhar/importacoes/{id}")
+	public ModelAndView detalhes(@PathVariable Long id) {
+		ModelAndView mv = new ModelAndView("Home/detalhesImportacao.html");
+		
+		Optional<Importacao> optional = this.repositoryImportacao.findById(id);
+		Importacao importacao = optional.get();
+		
+		List<Transacao> transacoes = this.repositoryTransacao.findAllByIdOfImportacao(id);
+		
+		mv.addObject("importacao", importacao);
+		mv.addObject("listaTransacoes", transacoes);
+		
 		return mv;
 	}
 	

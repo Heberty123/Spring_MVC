@@ -1,12 +1,16 @@
 package transacao.Models;
 
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 @Entity
 public class Importacao implements Comparable<Importacao> {
@@ -16,6 +20,10 @@ public class Importacao implements Comparable<Importacao> {
 	private Long id;
 	private Date dateHours;
 	private Date date;
+	@ManyToOne
+	private Usuario usuario;
+	@OneToMany(mappedBy="importacao")
+	private List<Transacao> transacoes = new ArrayList<Transacao>();
 	
 
 	public Importacao() {}
@@ -47,6 +55,14 @@ public class Importacao implements Comparable<Importacao> {
 
 	public void setDate(Date date) {
 		this.date = date;
+	}
+
+	public Usuario getUsuario() {
+		return usuario;
+	}
+
+	public void setUsuario(Usuario usuario) {
+		this.usuario = usuario;
 	}
 
 	@Override

@@ -16,14 +16,16 @@
 		<h1 class="container mt-4">Cadastro Usuário</h1>
 		
 		<div class="container">
-		  <form th:action="@{/cadastrar}" class="px-4 py-3" method="POST">
+		  <form th:object="${requestCadastro}" th:action="@{/cadastrar}" class="px-4 py-3" method="POST">
 		    <div class="mb-3">
 		      <label for="user" class="form-label">Nome</label>
-		      <input type="text" class="form-control" id="user" placeholder="usuario qualquer" name="nome">
+		      <input type="text" th:field="*{nome}" th:classappend="${erroUsername} ? is-invalid : null" class="form-control" id="user" placeholder="usuario qualquer">
+		      <div id="user" class="invalid-feedback">O nome de usuário já existe</div>
 		    </div>
 		    <div class="mb-3">
 		      <label for="email" class="form-label">Email</label>
-		      <input type="email" class="form-control" id="email" placeholder="usuariodev@gmail.com" name="email">
+		      <input type="email" th:field="*{email}" th:classappend="${erroEmail} ? is-invalid : null" class="form-control" id="email" placeholder="usuariodev@gmail.com">
+		      <div id="email" class="invalid-feedback">O email já foi cadastrado, por favor tente um email diferente !</div>
 		    </div>
 		    <div class="mb-3">
 		    </div>

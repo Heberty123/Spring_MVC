@@ -7,6 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 
 
 @Entity	
@@ -23,6 +24,8 @@ public class Transacao {
 	private String contaDestino;
 	private Double valor;
 	private Date data;
+	@ManyToOne
+	private Importacao importacao;
 	
 	public Transacao() {}
 
@@ -86,6 +89,14 @@ public class Transacao {
 
 	public Date getData() {
 		return data;
+	}
+
+	public Importacao getImportacao() {
+		return importacao;
+	}
+
+	public void setImportacao(Importacao importacao) {
+		this.importacao = importacao;
 	}
 
 	@Override

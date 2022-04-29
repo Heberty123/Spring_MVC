@@ -22,12 +22,16 @@
 							    <tr>
 							      <th class="table-secondary" scope="col">DATA TRANSAÇÕES</th>
 							      <th class="table-secondary" scope="col">DATA IMPORTAÇÕES</th>
+							      <th class="table-secondary" scope="col">REALIZADO POR</th>
+							      <th class="table-secondary" scope="col">OPÇÕES</th>
 							    </tr>
 							  </thead>
 							  <tbody>
 							    <tr th:each="importacao : ${listaImportacoes}">
 							      <td th:text="${#dates.format(importacao.date, 'dd/MM/yyyy')}">Mark</td>
 							      <td th:text="${#dates.format(importacao.dateHours, 'dd/MM/yyyy HH:mm:ss')}">Mark</td>
+							      <td th:text="${importacao.usuario.username}">usuario</td>
+							      <td><a class="btn btn-info" th:href="@{/Home/detalhar/importacoes/{id}(id = ${importacao.id})}">Detalhar</a></td>
 							    </tr>
 							  </tbody>
 							</table>

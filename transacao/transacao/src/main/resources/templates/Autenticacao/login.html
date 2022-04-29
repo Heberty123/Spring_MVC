@@ -14,17 +14,26 @@
 	
 	<a sec:authorize="!isAuthenticated()" href="/login">login</a>
 		<a sec:authorize="isAuthenticated()" href="/logout">logout</a>
-
-	<div class="container mt-5">
-		 <form th:action="@{/login}" method="post">
-            <div>
-            <input type="text" name="username" placeholder="Username"/>
-            </div>
-            <div>
-            <input type="password" name="password" placeholder="Password"/>
-            </div>
-            <input type="submit" value="Log in" />
-        </form>
+	
+	
+	<div class="container">
+	  <form th:action="@{/login}" method="POST" class="px-4 py-3">
+	    <div class="mb-3">
+	      <label for="email" class="form-label">Email address</label>
+	      <input type="text" class="form-control" id="email" name="username" placeholder="email@example.com">
+	    </div>
+	    <div class="mb-3">
+	      <label for="password" class="form-label">Password</label>
+	      <input type="password" class="form-control" id="password" name="password" placeholder="Password">
+	    </div>
+	    <div class="mb-3">
+	      
+	    </div>
+	    <button type="submit" class="btn btn-primary">Sign in</button>
+	  </form>
+	  <div class="dropdown-divider"></div>
+	  <a class="dropdown-item" th:href="@{/cadastrar}">New around here? Sign up</a>
+	  <a class="dropdown-item" th:href="@{/forgot}">Forgot password?</a>
 	</div>
 		 
 

@@ -3,12 +3,15 @@ package transacao.Models;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.stream.Collectors;
+import java.util.*;
+import transacao.Models.*;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.validation.constraints.NotEmpty;
+import javax.persistence.OneToMany;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -21,14 +24,14 @@ public class Usuario implements UserDetails {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	
+	@Column(unique = true)
 	private String username;
+	@Column(unique = true)
 	private String email;
 	private String password;
 	private String role;
-	
-	
-	
+	@OneToMany(mappedBy="usuario")
+	private List<Importacao> importacoes = new ArrayList<Importacao>();
 	
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -98,5 +101,11 @@ public class Usuario implements UserDetails {
 	public void setRole(String role) {
 		this.role = role;
 	}
+
+	public Long getId() {
+		return id;
+	}
+	
+	
 
 }
