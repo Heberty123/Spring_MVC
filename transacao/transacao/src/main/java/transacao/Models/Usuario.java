@@ -5,6 +5,7 @@ import java.util.Collection;
 import java.util.stream.Collectors;
 import java.util.*;
 import transacao.Models.*;
+import transacao.Service.Senha;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -16,6 +17,7 @@ import javax.persistence.OneToMany;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Entity
 public class Usuario implements UserDetails {
@@ -30,6 +32,7 @@ public class Usuario implements UserDetails {
 	private String email;
 	private String password;
 	private String role;
+	private Boolean ative;
 	@OneToMany(mappedBy="usuario")
 	private List<Importacao> importacoes = new ArrayList<Importacao>();
 	
@@ -105,7 +108,24 @@ public class Usuario implements UserDetails {
 	public Long getId() {
 		return id;
 	}
+
+	public boolean isAtive() {
+		return ative;
+	}
+
+	public void setAtive(boolean ative) {
+		this.ative = ative;
+	}
 	
+	public static Usuario generatedUser(String username, String email, String senha, PasswordEncoder passwordEncoder) {
+		Usuario usuario = new Usuario();
+		usuario.setUsername(username);
+		usuario.setEmail(email);
+		usuario.setRole(Role.USER.getNome());
+		usuario.setPassword(passwordEncoder.encode(senha));
+		usuario.setAtive(true);
+		return usuario;
+	}
 	
 
 }

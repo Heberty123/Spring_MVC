@@ -4,7 +4,10 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import org.springframework.web.servlet.ModelAndView;
+
 import transacao.Models.Transacao;
+import transacao.Models.Usuario;
 
 public class Check {
 	
@@ -32,5 +35,25 @@ public class Check {
 			}
 		}
 		return listaErroNull;
+	}
+	
+	
+	public static ModelAndView HasErro(Usuario UsernameExist, Usuario EmailExist) {
+		ModelAndView mv = new ModelAndView("redirect:/login");
+		if(UsernameExist != null || EmailExist != null) {
+			mv = new ModelAndView("Autenticacao/cadastro.html");
+			
+			if(UsernameExist != null){
+				mv.addObject("erroUsername", true);
+				System.out.println("tinha erro de username");
+			}
+			if(EmailExist != null) {
+				mv.addObject("erroEmail", true);
+				System.out.println("tinah erro de email");
+			}
+			return mv;
+		}
+		
+		return mv;
 	}
 }

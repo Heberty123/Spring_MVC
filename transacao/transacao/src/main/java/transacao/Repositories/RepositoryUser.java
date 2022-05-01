@@ -21,6 +21,11 @@ public interface RepositoryUser extends JpaRepository<Usuario, Long> {
 	@Query("SELECT u FROM Usuario u WHERE u.email = :email AND u.id != :id")
 	Usuario findByEmailDifferentOfId(String email, Long id);
 
-	@Query("SELECT u FROM Usuario u WHERE u.id != 1 AND u.username != :name")
-	List<Usuario> findAllWithoutPatternAndLogged(String name);
+	@Query("SELECT u FROM Usuario u WHERE u.id != 1 AND u.username != :name AND u.ative != 0")
+	List<Usuario> findAllWithoutPatternAndLoggedAndOnlyAtive(String name);
+
+	@Query("SELECT u FROM Usuario u WHERE u.email = :email AND u.ative != 0")
+	Usuario findByEmailInAtive(String email);
+
+	
 }

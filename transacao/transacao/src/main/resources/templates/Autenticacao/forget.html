@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="ISO-8859-1">
+<meta charset="UTF-8">
 <title>Insert title here</title>
 </head>
 <body>
@@ -13,7 +13,8 @@
 
 <form class="container" th:action="@{/retrieve}">
 	<label for="email" class="form-label">Email</label>
-	<input type="email" id="email" class="form-control" aria-describedby="admin@email.com" name="email">
+	<input type="email" id="email" class="form-control" th:classappend="${erro} ? is-invalid : null" aria-describedby="admin@email.com" name="email" th:value="${email}">
+	<div id="email" class="invalid-feedback">this email doesn´t exist in our database, try other account that´s exist !</div>
 	<div id="email" class="form-text">
 	  Pass your email here, so we'll send you a new password.
 	</div>

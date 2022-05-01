@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+<div class="container mt-3">
+<h1>ANÁLISE DE TRANSAÇÕES SUSPEITAS</h1>
+
+<form th:action="@{/Home/suspeitas}" method="POST">
+<label for="data" class="form-label">Pass month</label>
+<input type="month" id="data" class="form-control" name="data" th:value="${data}">
+<div id="data" class="form-text">
+	Pass month that you want to see list of suspicious transactions
+</div>
+<input type="submit">
+</form>
+
+	<h2>Transações suspeitas: </h2>
+	<table class="table table-striped">
+		<thead>
+			<tr>
+				  <th class="table-secondary" scope="col">Banco Origem</th>
+			      <th class="table-secondary" scope="col">Agencia Origem</th>
+			      <th class="table-secondary" scope="col">Conta Origem</th>
+			      <th class="table-secondary" scope="col">Banco Destino</th>
+			      <th class="table-secondary" scope="col">Agencia Destino</th>
+			      <th class="table-secondary" scope="col">Conta Destino</th>
+			      <th class="table-secondary" scope="col">Valor</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr th:each="transacao : ${SusTransacao}">
+				<td th:text="${transacao.bancoOrigem}">Mark</td>
+			      <td th:text="${transacao.agenciaOrigem}">Mark</td>
+			      <td th:text="${transacao.contaOrigem}">Mark</td>
+			      <td th:text="${transacao.bancoDestino}">Mark</td>
+			      <td th:text="${transacao.agenciaDestino}">Mark</td>
+			      <td th:text="${transacao.contaDestino}">Mark</td>
+			      <td th:text="${transacao.valor}">Mark</td>
+			</tr>
+		</tbody>
+	</table>
+	
+	<h2>Contas suspeitas: </h2>
+	<table class="table table-striped">
+		<thead>
+			<tr>
+				  <th class="table-secondary" scope="col">Banco</th>
+			      <th class="table-secondary" scope="col">Agencia</th>
+			      <th class="table-secondary" scope="col">Conta</th>
+			      <th class="table-secondary" scope="col">Valor movimentado</th>
+			      <th class="table-secondary" scope="col">tipo movimentação</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr th:each="conta : ${SusAccount}">
+				<td th:text="${conta.banco}">Mark</td>
+			      <td th:text="${conta.agencia}">Mark</td>
+			      <td th:text="${conta.conta}">Mark</td>
+			      <td th:text="${conta.valor}">Mark</td>
+			      <td th:text="${conta.tipo}">Mark</td>
+
+			</tr>
+		</tbody>
+	</table>
+	
+	
+
+</div>
+</body>
+</html>

@@ -1,5 +1,11 @@
 package transacao.Controllers;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.YearMonth;
+import java.time.format.DateTimeFormatter;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
@@ -17,12 +23,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import transacao.Models.Importacao;
+import transacao.Models.SuspiciousAccount;
 import transacao.Models.Transacao;
 import transacao.Models.Usuario;
 import transacao.Repositories.RepositoryImportacao;
 import transacao.Repositories.RepositoryTransacao;
 import transacao.Repositories.RepositoryUser;
 import transacao.Service.ReadFile;
+import transacao.Service.suspiciousTransaction;
 
 @Controller
 @RequestMapping("/Home")
@@ -110,7 +118,6 @@ public class PrincipalController {
 		for (Transacao transacao : lista) {
 			transacao.setImportacao(importacao);
 			this.repositoryTransacao.save(transacao);
-			
 		}
 		
 		List<Importacao> listaImportacao = this.repositoryImportacao.findAll();
@@ -145,5 +152,36 @@ public class PrincipalController {
 		return mv;
 	}
 	
+	
+	@RequestMapping("/suspeitas")
+	public ModelAndView suspeitas() {
+		ModelAndView mv = new ModelAndView("Home/suspeitas.html");
+		
+		return mv;
+	}
+	
+	
+	@PostMapping("/suspeitas")
+	public ModelAndView suspeitas(@RequestParam("data") String data) throws ParseException {
+		ModelAndView mv = new ModelAndView("Home/suspeitas.html");
+		mv.addObject("data", data);
+		
+		YearMonth local = YearMonth.parse(data, DateTimeFormatter.ofPattern("yyyy-MM"));
+		
+		System.out.println("Month: " + local.getMonthValue());
+		System.out.println("Year: " + local.getYear());
+		
+		List<Transacao> SusTransacao = this.repositoryTransacao.findAllSuspiciousTransactionsWithMonthAndYear(Double.valueOf("100000.00"), local.getMonthValue(), local.getYear());
+		
+		List<SuspiciousAccount> SusAccount = suspiciousTransaction.Account(repositoryTransacao.findAllWithMonthAndYear(local.getMonthValue(), local.getYear()), repositoryTransacao, Double.valueOf("1000000.00"), "saída");
+				
+		
+		mv.addObject("SusTransacao", SusTransacao);
+		mv.addObject("SusAccount", SusAccount);
+		
+		
+		
+		return mv;
+	}
 	
 }
