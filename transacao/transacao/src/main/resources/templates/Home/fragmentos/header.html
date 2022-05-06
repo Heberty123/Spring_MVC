@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="https://www.thymeleaf.org/">
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
@@ -7,7 +7,7 @@
 </head>
 <body>
 
-	<header class="p-3 bg-dark text-white">
+<header th:fragments="headerr" class="p-3 bg-dark text-white">
     <div class="container">
       <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
         <a href="/" class="d-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none">
@@ -15,9 +15,9 @@
         </a>
 
         <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
-          <li><a th:href="@{/Home}" class="nav-link px-2 text-white">| Home |</a></li>
+          <li><a href="#" class="nav-link px-2 text-secondary">| Home |</a></li>
           <li><a th:href="@{/Home/importacoes}" class="nav-link px-2 text-white">| Show import |</a></li>
-          <li><a th:href="@{/usuarios}" class="nav-link px-2 text-secondary">| User list |</a></li>
+          <li><a th:href="@{/usuarios}" class="nav-link px-2 text-white">| User list |</a></li>
           <li><a th:href="@{/Home/suspeitas}" class="nav-link px-2 text-white">| suspicious transactions |</a></li>
           <li><a href="#" class="nav-link px-2 text-white">| About |</a></li>
         </ul>
@@ -31,28 +31,6 @@
       </div>
     </div>
     </header>
-
-
-<h1 class="container text-muted mt-3 mb-5">Lista de usuários</h1>
-
-<table class="table table-striped table-hover container">
-  			<thead>
-			    <tr>
-			      <th class="table-secondary" scope="col">ID</th>
-			      <th class="table-secondary" scope="col">NOME</th>
-			      <th class="table-secondary" scope="col">EMAIL</th>
-			      <th class="table-secondary" scope="col">OPÇÕES</th>
-			    </tr>
-			 </thead>
-			 <tbody>
-			    <tr th:each="usuario : ${usuarios}">
-			      <td th:text="${usuario.id}">ID</td>
-			      <td th:text="${usuario.username}">NOME</td>
-			      <td th:text="${usuario.email}">EMAIL</td>
-			      <td><a class="btn btn-info" th:href="@{/edit/user/{id}(id = ${usuario.getId()})}">editar</a><a class="btn btn-danger" th:href="@{/delete/user/{id}(id = ${usuario.getId()})}">delete</a></td>
-			    </tr>
-			 </tbody>
-		</table>
 
 </body>
 </html>

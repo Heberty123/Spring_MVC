@@ -1,59 +1,39 @@
 package transacao.Service;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.nio.charset.StandardCharsets;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.Scanner;
-
 import org.springframework.web.multipart.MultipartFile;
-
+import transacao.Exception.ExceptionFileEmpty;
+import transacao.Exception.ExceptionSupport;
 import transacao.Models.Transacao;
+import transacao.Service.ExtSupport.ReadCSV;
+import transacao.Service.ExtSupport.ReadXML;
+
 
 public class ReadFile {
 	
-	public static Map Ready(MultipartFile file){
+
+	public static Map Ready(MultipartFile file) throws Exception{
 		List<Transacao> lista = new ArrayList<>();
 		List<Transacao> duplicadas = new ArrayList<>();
-		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
 		
-		try {
-			InputStream input = file.getInputStream();
-			
-			try(InputStreamReader isr = new InputStreamReader(input, StandardCharsets.UTF_8)){
+		if(file.isEmpty()) 
+			throw new ExceptionFileEmpty("This input is empty !");
+		
+		if(file.getContentType().equals("text/csv")) 
+			ReadCSV.read(file, lista, duplicadas);
+		
+		else if(file.getContentType().equals("text/xml")) 
+			ReadXML.read(file, lista, duplicadas);
+		
+		else 
+			throw new ExceptionSupport("the system only support file with extensions:  .CSV and .XML");
+		
+		System.out.println("\n\nO nome do file é: " + file.getOriginalFilename());
+		System.out.println("O tamanho em megabytes do file é: " + file.getSize());
+		System.out.println("\n\n");
 				
-				try(BufferedReader br = new BufferedReader(isr)){
-					
-					br.lines().forEach(line -> {
-						String fields[] = line.split(",");
-						try {
-							Transacao transacao = new Transacao(fields[0], Convert.toInteger(fields[1]), fields[2], fields[3], Convert.toInteger(fields[4]), fields[5], Convert.toDouble(fields[6]), format.parse(fields[7]));
-							if(lista.contains(transacao)) {
-								duplicadas.add(transacao);
-							}
-							else {
-								lista.add(transacao);
-							}
-						} catch (Exception e) {
-							
-							e.printStackTrace();
-						} 
-					});
-				}
-				
-			}
-			input.close();		
-	
-		} catch (IOException e) {
-				e.printStackTrace();
-		}
-		
-		
 		List<Transacao> listaErroNull = Check.findErroNull(lista);
 		
 		List<Transacao> listaErroDate = Check.findErroByDate(lista);
@@ -68,34 +48,13 @@ public class ReadFile {
 	
 	
 	public static List<Transacao> endList(List<Transacao> lista, List<Transacao> ErroNull, List<Transacao> ErroDate){
-		
 		lista.removeAll(ErroNull);
 		lista.removeAll(ErroDate);
-		
 		return lista;
 	}
 
 
 	
-	public static boolean fileIsEmpty(MultipartFile file) {
-		
-		try {
-			InputStream input = file.getInputStream();
-			
-			try(InputStreamReader isr = new InputStreamReader(input, StandardCharsets.UTF_8)){
-					
-					Scanner sc = new Scanner(isr);
-					sc.next();
-					if(sc.hasNext()) {
-						return false;
-					}
-			}
-		}catch(Exception e) {
-			e.printStackTrace();
-		}
-			
-		return true; 
 	
-	}
 	
 }

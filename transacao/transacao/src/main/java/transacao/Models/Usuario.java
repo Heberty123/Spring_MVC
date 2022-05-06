@@ -1,12 +1,7 @@
 package transacao.Models;
 
-import java.util.Arrays;
-import java.util.Collection;
 import java.util.stream.Collectors;
 import java.util.*;
-import transacao.Models.*;
-import transacao.Service.Senha;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -32,7 +27,7 @@ public class Usuario implements UserDetails {
 	private String email;
 	private String password;
 	private String role;
-	private Boolean ative;
+	private String nome;
 	@OneToMany(mappedBy="usuario")
 	private List<Importacao> importacoes = new ArrayList<Importacao>();
 	
@@ -108,24 +103,44 @@ public class Usuario implements UserDetails {
 	public Long getId() {
 		return id;
 	}
-
-	public boolean isAtive() {
-		return ative;
-	}
-
-	public void setAtive(boolean ative) {
-		this.ative = ative;
-	}
 	
+	public String getNome() {
+		return nome;
+	}
+
+	public void setNome(String nome) {
+		this.nome = nome;
+	}
+
 	public static Usuario generatedUser(String username, String email, String senha, PasswordEncoder passwordEncoder) {
 		Usuario usuario = new Usuario();
 		usuario.setUsername(username);
+		usuario.setNome(username);
 		usuario.setEmail(email);
 		usuario.setRole(Role.USER.getNome());
 		usuario.setPassword(passwordEncoder.encode(senha));
-		usuario.setAtive(true);
 		return usuario;
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(email, nome, password, role, username);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Usuario other = (Usuario) obj;
+		return Objects.equals(email, other.email) && Objects.equals(nome, other.nome)
+				&& Objects.equals(password, other.password) && Objects.equals(role, other.role)
+				&& Objects.equals(username, other.username);
 	}
 	
 
+	
 }

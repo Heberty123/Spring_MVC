@@ -1,115 +1,66 @@
 package transacao.Service;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.Scanner;
+import org.springframework.stereotype.Service;
 import transacao.Models.SuspiciousAccount;
-import transacao.Models.Transacao;
+import transacao.Models.SuspiciousAgency;
 import transacao.Repositories.RepositoryTransacao;
 
-public class suspiciousTransaction2 {
 
-	public static List<SuspiciousAccount> Account(List<Transacao> lista, RepositoryTransacao repositoryTransacao, Double valueLimit, String type) {
+public class SusTransaction {
 
-		Set<String> sourceAccount = getAllSourceAccountExit(lista);
-		Set<String> destinationAccount = getAllSourceAccountEntry(lista);
-		Map<String, Set<Transacao>> mapExit = getMapAllTransactionsByStringExit(sourceAccount, repositoryTransacao);
-		Map<String, Set<Transacao>> mapEntry = getMapAllTransactionsByStringEntry(destinationAccount, repositoryTransacao);
-		List<SuspiciousAccount> suspicious = findSuspiciousAccount(mapExit, mapEntry, valueLimit);
-		
-		return suspicious;
-	}
-	
-	
-
-	private static List<SuspiciousAccount> findSuspiciousAccount(Map<String, Set<Transacao>> mapExit, Map<String, Set<Transacao>> mapEntry, Double valueLimit){
+	public static List<SuspiciousAccount> Account(RepositoryTransacao repTransacao ,int month, int year, double limit){
 		List<SuspiciousAccount> suspicious = new ArrayList<>();
-		SuspiciousAccount account = new SuspiciousAccount();
 		
-		mapExit.forEach((k, v) -> {
-			account.setConta(k);
-			account.setTipo("saída");
-			v.forEach(valor -> {
-				account.setBanco(valor.getBancoOrigem());
-				account.setAgencia(valor.getAgenciaOrigem());
-				account.sum(valor.getValor());		
-			});
+		repTransacao.findOrigemAccWithMonthAndYear(month, year).forEach(o -> {
+			Scanner read = new Scanner(o);
 			
-			if(account.getValor() >= valueLimit) {
-				suspicious.add(new SuspiciousAccount(account.getBanco(), account.getAgencia(), k, account.getValor(), account.getTipo()));
+			String fields[] = read.nextLine().split(",");
+			if(Double.parseDouble(fields[3]) >= limit) {
+				suspicious.add(new SuspiciousAccount(fields[0], Integer.parseInt(fields[1]), fields[2], Double.valueOf(fields[3]), "saída"));
 			}
-			
-			account.setValor(0.0);
 		});
 		
 		
-		mapEntry.forEach((k, v) -> {
-			account.setConta(k);
-			account.setTipo("entrada");
-			v.forEach(valor -> {
-				account.setBanco(valor.getBancoOrigem());
-				account.setAgencia(valor.getAgenciaOrigem());
-				account.sum(valor.getValor());		
-			});
+		repTransacao.findDestinoAccWithMonthAndYear(month, year).forEach(d -> {
+			Scanner read = new Scanner(d);
 			
-			if(account.getValor() >= valueLimit) {
-				suspicious.add(new SuspiciousAccount(account.getBanco(), account.getAgencia(), k, account.getValor(), account.getTipo()));
+			String fields[] = read.nextLine().split(",");
+			if(Double.parseDouble(fields[3]) >= limit) {
+				suspicious.add(new SuspiciousAccount(fields[0], Integer.parseInt(fields[1]), fields[2], Double.valueOf(fields[3]), "entrada"));
 			}
-			
-			account.setValor(0.0);
 		});
+
 		
 		return suspicious;
 	}
 	
 	
-
-	private static Map<String, Set<Transacao>> getMapAllTransactionsByStringExit(Set<String> sourceAccount,
-			RepositoryTransacao repositoryTransacao) {
+	public static List<SuspiciousAgency> Agency(RepositoryTransacao repTransacao ,int month, int year, double limit){
+		List<SuspiciousAgency> suspicious = new ArrayList<>();
 		
-		Map<String, Set<Transacao>> map = new HashMap<>();
-		
-		sourceAccount.forEach(Account -> {
-			map.put(Account, repositoryTransacao.findAllBySourceAccountExit(Account));
+		repTransacao.findAllOrigemAgencyWithMonthAndYear(month, year).forEach(o -> {
+			Scanner read = new Scanner(o);
+			
+			String fields[] = read.nextLine().split(",");
+			if(Double.parseDouble(fields[2]) >= limit) {
+				suspicious.add(new SuspiciousAgency(fields[0], Integer.parseInt(fields[1]), Double.valueOf(fields[2]), "saída"));
+			}
 		});
 		
-		return map;
-	}
-	
-	
-	
-	private static Map<String, Set<Transacao>> getMapAllTransactionsByStringEntry(Set<String> destinationAccount,
-			RepositoryTransacao repositoryTransacao) {
 		
-		Map<String, Set<Transacao>> map = new HashMap<>();
-		
-		destinationAccount.forEach(Account -> {
-			map.put(Account, repositoryTransacao.findAllBySourceAccountEntry(Account));
+		repTransacao.findAllDestinoAgencyWithMonthAndYear(month, year).forEach(d -> {
+			Scanner read = new Scanner(d);
+			
+			String fields[] = read.nextLine().split(",");
+			if(Double.parseDouble(fields[2]) >= limit) {
+				suspicious.add(new SuspiciousAgency(fields[0], Integer.parseInt(fields[1]), Double.valueOf(fields[2]), "entrada"));
+			}
 		});
+
 		
-		return map;
-	}
-
-
-
-
-	private static Set<String> getAllSourceAccountExit(List<Transacao> lista) {
-		Set<String> set = new HashSet<String>();
-		for (Transacao transacao : lista) {
-			set.add(transacao.getContaOrigem());
-		}
-		return set;
-	}
-	
-	
-	private static Set<String> getAllSourceAccountEntry(List<Transacao> lista) {
-		Set<String> set = new HashSet<String>();
-		for (Transacao transacao : lista) {
-			set.add(transacao.getContaDestino());
-		}
-		return set;
+		return suspicious;
 	}
 }
