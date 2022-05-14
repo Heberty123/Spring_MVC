@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+</head>
+<body>
+
+<section class="container">
+
+<h1>Teste</h1>
+
+<form th:action="@{/Rede/Comentario}" method="POST">
+    <div class="form-group">
+        <label for="subtitle">Quem é você ? Amigo do senai, fatec, amigo ou parente ?</label>
+        <input type="text" class="form-control" id="subtitle" name="subtitle" placeholder="Quem é você?">
+        <small id="emailHelp" class="form-text text-muted">Você pode falar se é meu amigo de algum lugar ou qualquer coisa que ache melhor !.</small>
+    </div>
+    <div class="form-group">
+        <label for="description">Descricao (comentário)</label>
+        <textarea class="form-control" id="description" name="description" placeholder="texto"></textarea>
+        <small id="description" class="form-text text-muted">Aqui você pode digitar comentário !.</small>
+    </div>
+    <button type="submit" class="btn btn-primary">Enviar</button>
+</form>
+
+</body>
+
+</section>
+
+</html>
