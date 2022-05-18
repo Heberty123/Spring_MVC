@@ -2,13 +2,7 @@ package transacao.Models;
 
 import java.util.stream.Collectors;
 import java.util.*;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
-
+import javax.persistence.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -30,7 +24,8 @@ public class Usuario implements UserDetails {
 	private String nome;
 	@OneToMany(mappedBy="usuario")
 	private List<Importacao> importacoes = new ArrayList<Importacao>();
-	
+	private byte[] imagem;
+
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 		// TODO Auto-generated method stub
@@ -110,6 +105,13 @@ public class Usuario implements UserDetails {
 
 	public void setNome(String nome) {
 		this.nome = nome;
+	}
+
+	public byte[] getImagem() {
+		return imagem;
+	}
+	public void setImagem(byte[] imagem) {
+		this.imagem = imagem;
 	}
 
 	public static Usuario generatedUser(String username, String email, String senha, PasswordEncoder passwordEncoder) {

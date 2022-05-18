@@ -13,6 +13,72 @@
 }
 
 .date-comm{
-    text-align: right;
     margin-bottom: 0px;
+    display: flex;
+    flex-direction: row;
+    gap: 5px;
+    justify-content: flex-end;
 }
+
+.date-comm p{ 
+    margin: 0px;
+}
+
+.section-likes{
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0,0,0,.5);
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    z-index: 2000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.close{
+    display: none;
+}
+
+
+@keyframes modal {
+    from{
+        opacity: 0;
+        transform: translate3d(0, -60px, 0);
+    }
+    to {
+        opacity: 1;
+        transform: translate3d(0, 0, 0);
+    }
+}
+
+.sublike{
+    width: 30%;
+    height: 30%;
+    border-radius: 4px;
+    background-color: aliceblue;
+    box-sizing: border-box;
+    padding: 15px;
+    animation: modal .3s;
+    position: relative;
+}
+
+.close-modal{
+    width: 60px;
+    cursor: pointer;
+    position: absolute;
+    top: -17px;
+    right: -17px;
+}
+
+.button-close-modal{
+    width: 75px;
+    cursor: pointer;
+    position: absolute;
+    right: 10px;
+    bottom: 10px;
+}
+
+
+

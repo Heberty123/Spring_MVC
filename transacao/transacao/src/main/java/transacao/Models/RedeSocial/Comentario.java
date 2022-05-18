@@ -1,7 +1,7 @@
 package transacao.Models.RedeSocial;
 
-import transacao.Models.Usuario;
 
+import transacao.Models.Usuario;
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Date;
@@ -13,6 +13,7 @@ public class Comentario {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @OneToOne
     private Usuario usuario;
     private String subtitle;
     private String description;
@@ -26,22 +27,8 @@ public class Comentario {
         this.description = description;
     }
 
-
     @OneToMany(mappedBy="comentario")
-    private List<Love> likes = new ArrayList<Love>();
-
-    @OneToMany(mappedBy="comentario")
-    private List<Amazing> amazings = new ArrayList<Amazing>();
-
-    @OneToMany(mappedBy="comentario")
-    private List<Boring> borings = new ArrayList<Boring>();
-
-    @OneToMany(mappedBy="comentario")
-    private List<Angry> angrys = new ArrayList<Angry>();
-
-    @OneToMany(mappedBy="comentario")
-    private List<Disgust> disgusts = new ArrayList<Disgust>();
-
+    private List<Curtidas> likes = new ArrayList<Curtidas>();
 
     public Long getId() {
         return id;
@@ -81,5 +68,19 @@ public class Comentario {
 
     public void setDate(Date date) {
         this.date = date;
+    }
+
+    public int countLikes(){
+        return likes.size();
+    }
+
+
+    public Curtidas existCurtida(String nome) {
+        for (Curtidas like : likes) {
+            if(like.getUsuario().getNome().equals(nome)){
+                return like;
+            }
+        }
+        return null;
     }
 }

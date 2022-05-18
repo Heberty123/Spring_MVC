@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <!-- CSS only -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+
+</head>
+<body>
+<h1>Bem-vindo !</h1>
+
+<h2>Perfil: </h2>
+
+<img th:src="${encoding}" width="300" height="300">
+
+<h3>Nome: <span th:text="${usuario.username}"></span></h3>
+<h3>Email: <span th:text="${usuario.email}"></span></h3>
+
+<form th:action="@{/Rede/Perfil}" method="POST" enctype="multipart/form-data">
+    <div class="mb-3">
+        <label for="formFile" class="form-label">Default file input example</label>
+        <input class="form-control" type="file" id="formFile" name="inpimage">
+    </div>
+
+    <input type="submit" value="alterar">
+</form>
+
+
+
+</body>
+</html>

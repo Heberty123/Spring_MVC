@@ -45,25 +45,59 @@
 
     <section th:each="comentario : ${comentarios}" class="comentario">
         <div>
-            <p th:text="${#dates.format(comentario.date, 'dd/MM/yyyy - HH:mm')}" class="date-comm">data</p>
+            <div class="date-comm">
+                <p>Posted at </p>
+                <p th:text="${#dates.format(comentario.date, 'dd/MM/yyyy - HH:mm')}">data</p>
+            </div>
             <h2 th:text="${comentario.usuario.username}">title</h2>
             <h3 th:text="${comentario.subtitle}">Subtitle</h3>
             <p th:text="${comentario.description}">Descricao</p>
             <div class="bottom-comm">
-                <a th:href="@{/Curtidas/{comentarioId}(comentarioId = ${comentario.id})}">Curtir</a>
-                <p>Curtidas</p>
+                <a th:href="@{/Rede/Curtidas/{curtidaId}/Comentario/{comentarioId}(curtidaId = 1, comentarioId = ${comentario.id})}">Amazing</a>
+                <a th:href="@{/Rede/Curtidas/{curtidaId}/Comentario/{comentarioId}(curtidaId = 2, comentarioId = ${comentario.id})}">Love</a>
+                <a th:href="@{/Rede/Curtidas/{curtidaId}/Comentario/{comentarioId}(curtidaId = 3, comentarioId = ${comentario.id})}">Flower</a>
+                <a th:href="@{/Rede/Curtidas/{curtidaId}/Comentario/{comentarioId}(curtidaId = 4, comentarioId = ${comentario.id})}">Disgust</a>
+                <a th:href="@{/Rede/Curtidas/{curtidaId}/Comentario/{comentarioId}(curtidaId = 5, comentarioId = ${comentario.id})}">Angry</a>
+                <a th:href="@{/Rede/Show/Curtidas/{comentarioId}(comentarioId = ${comentario.id})}"><span th:text="${comentario.countLikes()}">Counts </span>Curtidas</a>
             </div>
         </div>
     </section>
 
     <a th:href="@{/Rede/Comentario}">Poste seu comentário here !</a>
-    
+
 </section>
 
 
-<footer class="d-flex flex-wrap justify-content-between align-items-center py-3 my-2 border-top p-3">
+<div class="section-likes" th:if="${open}">
+    <div class="sublike">
+        <a th:href="@{/Rede/Close}"><img class="close-modal" th:src="@{/img/close.svg}" alt="close window"></a>
+        <h2>People that like this comment</h2>
+        <ul>
+            <li th:each="like : ${likes}">
 
+                <div>
+                    <p th:if="${like.type == 1}">Amazing</p>
+                    <p th:if="${like.type == 2}">Love</p>
+                    <p th:if="${like.type == 3}">Flowers</p>
+                    <p th:if="${like.type == 4}">Disgust</p>
+                    <p th:if="${like.type == 5}">Angry</p>
+                    <p th:text="${like.usuario.nome}">name</p>
+                </div>
+
+
+
+
+            </li>
+        </ul>
+        <a th:href="@{/Rede/Close}"><img class="button-close-modal" th:src="@{/img/button-close.svg}" alt="close button window"></a>
+    </div> 
+</div>
+  
+
+
+<footer class="d-flex flex-wrap justify-content-between align-items-center py-3 my-2 border-top p-3">
 </footer>
+
 
 </body>
 </html>
