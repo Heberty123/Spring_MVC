@@ -3,15 +3,21 @@ package transacao.Models;
 import java.util.stream.Collectors;
 import java.util.*;
 import javax.persistence.*;
+import lombok.*;
+import org.hibernate.annotations.Type;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import transacao.Service.ConfigImg;
 
+@Getter
+@Setter
 @Entity
 public class Usuario implements UserDetails {
 
-	
+	@Getter
+	@Setter
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
@@ -24,7 +30,12 @@ public class Usuario implements UserDetails {
 	private String nome;
 	@OneToMany(mappedBy="usuario")
 	private List<Importacao> importacoes = new ArrayList<Importacao>();
-	private byte[] imagem;
+
+	@Lob
+	@Type(type = "org.hibernate.type.ImageType")
+	private byte[] image;
+
+
 
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -35,25 +46,11 @@ public class Usuario implements UserDetails {
 	}
 
 	@Override
-	public String getPassword() {
-		// TODO Auto-generated method stub
-		return this.password;
-	}
+	public String getPassword() { return this.password; }
 
 	@Override
-	public String getUsername() {
-		// TODO Auto-generated method stub
-		return this.username;
-	}
+	public String getUsername() { return this.username; }
 
-	
-	public String getEmail() {
-		return this.email;
-	}
-	
-	public String getRole() {
-		return this.role;
-	}
 
 	@Override
 	public boolean isAccountNonExpired() {
@@ -79,48 +76,23 @@ public class Usuario implements UserDetails {
 		return true;
 	}
 
-	public void setUsername(String username) {
-		this.username = username;
+
+	public String showPhoto(){
+		return ConfigImg.imgToModel(this);
 	}
 
-	public void setEmail(String email) {
-		this.email = email;
-	}
 
-	public void setPassword(String password) {
-		this.password = password;
-	}
-
-	public void setRole(String role) {
-		this.role = role;
-	}
-
-	public Long getId() {
-		return id;
-	}
-	
-	public String getNome() {
-		return nome;
-	}
-
-	public void setNome(String nome) {
-		this.nome = nome;
-	}
-
-	public byte[] getImagem() {
-		return imagem;
-	}
-	public void setImagem(byte[] imagem) {
-		this.imagem = imagem;
-	}
-
-	public static Usuario generatedUser(String username, String email, String senha, PasswordEncoder passwordEncoder) {
+	public static Usuario generatedUser(String username, String email, String senha, PasswordEncoder passwordEncoder) throws Exception {
 		Usuario usuario = new Usuario();
 		usuario.setUsername(username);
 		usuario.setNome(username);
 		usuario.setEmail(email);
 		usuario.setRole(Role.USER.getNome());
 		usuario.setPassword(passwordEncoder.encode(senha));
+		/*
+		ConfigImg.attributeImg(usuario);
+		*/
+
 		return usuario;
 	}
 
@@ -142,7 +114,5 @@ public class Usuario implements UserDetails {
 				&& Objects.equals(password, other.password) && Objects.equals(role, other.role)
 				&& Objects.equals(username, other.username);
 	}
-	
 
-	
 }

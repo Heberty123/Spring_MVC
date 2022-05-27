@@ -1,5 +1,8 @@
 package transacao.Models;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import java.util.Date;
 import java.util.Objects;
 
@@ -8,8 +11,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
-
-
+@Getter
+@Setter
 @Entity	
 public class Transacao {
 
@@ -41,63 +44,7 @@ public class Transacao {
 		this.data = data;
 	}
 	
-	
 
-
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	public String getBancoOrigem() {
-		return bancoOrigem;
-	}
-
-
-	public Integer getAgenciaOrigem() {
-		return agenciaOrigem;
-	}
-
-
-	public String getContaOrigem() {
-		return contaOrigem;
-	}
-
-
-	public String getBancoDestino() {
-		return bancoDestino;
-	}
-
-
-	public Integer getAgenciaDestino() {
-		return agenciaDestino;
-	}
-
-
-	public String getContaDestino() {
-		return contaDestino;
-	}
-
-
-	public Double getValor() {
-		return valor;
-	}
-
-
-	public Date getData() {
-		return data;
-	}
-
-	public Importacao getImportacao() {
-		return importacao;
-	}
-
-	public void setImportacao(Importacao importacao) {
-		this.importacao = importacao;
-	}
 
 	@Override
 	public String toString() {

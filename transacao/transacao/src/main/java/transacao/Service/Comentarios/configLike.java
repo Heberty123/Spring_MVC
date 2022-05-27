@@ -29,7 +29,6 @@ public class configLike {
         Curtidas curtida = comentario.existCurtida(usuario.getUsername());
 
 
-
         if(curtida != null){
             if(curtida.getType() == curtidaId){
                 repositoryCurtida.delete(curtida);

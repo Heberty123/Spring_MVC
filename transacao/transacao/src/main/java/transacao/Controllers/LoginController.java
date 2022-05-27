@@ -1,9 +1,12 @@
 package transacao.Controllers;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.List;
 import java.util.Optional;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.CurrentSecurityContext;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -47,7 +50,7 @@ public class LoginController {
 	
 	
 	@PostMapping("/cadastrar")
-	public ModelAndView Cadastrar(@Valid RequestCadastro req) {
+	public ModelAndView Cadastrar(@Valid RequestCadastro req) throws Exception {
 		ModelAndView mv = new ModelAndView("redirect:/login");
 		Usuario UsernameExist = repositoryUser.findByUsername(req.getNome());
 		Usuario EmailExist = repositoryUser.findByEmail(req.getEmail());
@@ -77,10 +80,10 @@ public class LoginController {
 	
 	@RequestMapping("/usuarios")
 	public ModelAndView lista(@CurrentSecurityContext(expression="authentication")
-    Authentication authentication) {
+    Authentication authentication) throws IOException {
+
 		ModelAndView mv = new ModelAndView("Autenticacao/usuarios.html");
 		List<Usuario> usuarios = this.repositoryUser.findAllWithoutPatternAndLogged(authentication.getName());
-		
 		mv.addObject("usuarios", usuarios);
 		
 		return mv;

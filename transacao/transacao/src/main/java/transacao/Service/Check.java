@@ -1,5 +1,6 @@
 package transacao.Service;
 
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
@@ -94,7 +95,7 @@ public class Check {
 		
 		Importacao importacao = null;
 		if(!lista.isEmpty()) {
-			importacao = new Importacao(new Date(), lista.get(0).getData());
+			importacao = new Importacao(lista.get(0).getData());
 			importacao.setUsuario(usuario);
 			rImportacao.save(importacao);
 		}

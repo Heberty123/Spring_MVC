@@ -9,7 +9,8 @@
 
 <h1>Teste</h1>
 
-<form th:object="${requestComentary}" th:action="@{/Rede/Comentario}" method="POST">
+
+<form th:object="${requestComentary}" th:action="@{/Rede/Comentario/edit/{id}(id = ${id})}" method="POST" enctype="multipart/form-data">
     <div class="form-group">
         <label for="subtitle">Quem é você ? Amigo do senai, da fatec, ou amigo ou parente ?</label>
         <input type="text" class="form-control" th:field="*{subtitle}" placeholder="Quem é você?">
@@ -17,8 +18,8 @@
     </div>
     <div class="form-group">
         <label for="description">Descricao (comentário)</label>
-        <textarea class="form-control" th:field="*{description}" placeholder="texto" maxlength="337"></textarea>
-        <small id="description" class="form-text text-muted">Aqui você digita comentário !. max 337</small>
+        <textarea class="form-control" th:field="*{description}" placeholder="texto"></textarea>
+        <small id="description" class="form-text text-muted">Aqui você digita comentário !.</small>
     </div>
     <button type="submit" class="btn btn-primary">Enviar</button>
 </form>

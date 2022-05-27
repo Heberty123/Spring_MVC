@@ -1,12 +1,20 @@
 package transacao.Models.RedeSocial;
 
 
+import lombok.*;
+import org.hibernate.annotations.Type;
 import transacao.Models.Usuario;
+import transacao.Service.ConfigImg;
+
 import javax.persistence.*;
+import java.time.Instant;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
+@Getter
+@Setter
 @Entity
 public class Comentario {
 
@@ -16,8 +24,15 @@ public class Comentario {
     @OneToOne
     private Usuario usuario;
     private String subtitle;
+    @Lob
     private String description;
-    private Date date = new Date();
+
+    private ZonedDateTime now = ZonedDateTime.now(ZoneId.of("America/Sao_Paulo"));
+
+
+
+    @OneToMany(mappedBy="comentario", cascade = CascadeType.REMOVE)
+    private List<Curtidas> likes = new ArrayList<Curtidas>();
 
     public Comentario(){}
 
@@ -25,49 +40,6 @@ public class Comentario {
         this.usuario = usuario;
         this.subtitle = subtitle;
         this.description = description;
-    }
-
-    @OneToMany(mappedBy="comentario")
-    private List<Curtidas> likes = new ArrayList<Curtidas>();
-
-    public Long getId() {
-        return id;
-    }
-
-    public Usuario getUsuario() {
-        return usuario;
-    }
-
-    public String getSubtitle() {
-        return subtitle;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public Date getDate() {
-        return date;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public void setUsuario(Usuario usuario) {
-        this.usuario = usuario;
-    }
-
-    public void setSubtitle(String subtitle) {
-        this.subtitle = subtitle;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public void setDate(Date date) {
-        this.date = date;
     }
 
     public int countLikes(){
@@ -83,4 +55,6 @@ public class Comentario {
         }
         return null;
     }
+
+
 }

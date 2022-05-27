@@ -1,11 +1,14 @@
 package transacao.Models.RedeSocial;
 
+import lombok.Getter;
+import lombok.Setter;
 import transacao.Models.Usuario;
 
 import javax.persistence.*;
 import java.util.Objects;
 
-
+@Getter
+@Setter
 @Entity
 public class Curtidas {
 
@@ -14,7 +17,7 @@ public class Curtidas {
     private Long id;
 
     private int type;
-
+    @OneToOne
     private Usuario usuario;
 
     @ManyToOne
@@ -26,36 +29,6 @@ public class Curtidas {
         this.id = id;
         this.usuario = usuario;
         this.comentario = comentario;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public Usuario getUsuario() {
-        return usuario;
-    }
-
-    public Comentario getComentario() {
-        return comentario;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public void setUsuario(Usuario usuario) {
-        this.usuario = usuario;
-    }
-
-    public void setComentario(Comentario comentario) {
-        this.comentario = comentario;
-    }
-
-    public int getType() { return type; }
-
-    public void setType(int type) {
-        this.type = type;
     }
 
 

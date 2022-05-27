@@ -1,5 +1,10 @@
 package transacao.Models;
 
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
 public class SuspiciousAccount {
 
 	private String banco;
@@ -7,10 +12,11 @@ public class SuspiciousAccount {
 	private String conta;
 	private double valor;
 	private String tipo;
-	
-	public SuspiciousAccount() {}
 
-	public SuspiciousAccount(String banco, Integer agencia, String conta, Double valor, String tipo) {
+
+	public SuspiciousAccount(){}
+
+	public SuspiciousAccount(String banco, Integer agencia, String conta, double valor, String tipo) {
 		this.banco = banco;
 		this.agencia = agencia;
 		this.conta = conta;
@@ -18,49 +24,4 @@ public class SuspiciousAccount {
 		this.tipo = tipo;
 	}
 
-	public String getBanco() {
-		return banco;
-	}
-
-	public void setBanco(String banco) {
-		this.banco = banco;
-	}
-
-	public Integer getAgencia() {
-		return agencia;
-	}
-
-	public void setAgencia(Integer agencia) {
-		this.agencia = agencia;
-	}
-
-	public String getConta() {
-		return conta;
-	}
-
-	public void setConta(String conta) {
-		this.conta = conta;
-	}
-
-	public Double getValor() {
-		return valor;
-	}
-
-	public void setValor(Double valor) {
-		this.valor = valor;
-	}
-
-	public String getTipo() {
-		return tipo;
-	}
-
-	public void setTipo(String tipo) {
-		this.tipo = tipo;
-	}
-	
-	public void sum(double sum) {
-		this.valor += sum;
-	}
-	
-	
 }

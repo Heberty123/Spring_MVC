@@ -1,16 +1,10 @@
 package transacao.Controllers;
 
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.YearMonth;
 import java.time.format.DateTimeFormatter;
-import java.util.Collections;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.CurrentSecurityContext;
@@ -21,10 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
-import transacao.Exception.ExceptionSupport;
 import transacao.Models.Importacao;
-import transacao.Models.SuspiciousAccount;
-import transacao.Models.SuspiciousAgency;
 import transacao.Models.Transacao;
 import transacao.Models.Usuario;
 import transacao.Repositories.RepositoryImportacao;
@@ -32,7 +23,7 @@ import transacao.Repositories.RepositoryTransacao;
 import transacao.Repositories.RepositoryUser;
 import transacao.Service.Check;
 import transacao.Service.ReadFile;
-import transacao.Service.SusTransaction;
+import transacao.Service.Transacao.SusTransaction;
 
 @Controller
 @RequestMapping("/Home")
@@ -40,18 +31,16 @@ public class PrincipalController {
 	
 	@Autowired
 	RepositoryTransacao repTransacao;
-	
 	@Autowired
 	RepositoryImportacao repImportacao;
-	
 	@Autowired
 	RepositoryUser repUser;
+	@Autowired
+	SusTransaction susTransaction;
 
 
 	@RequestMapping("")
-	public String Principal() {
-		return "Home/home.html";
-	}
+	public String Principal() { return "Home/home.html"; }
 	
 	
 	@PostMapping("/upload")
@@ -77,7 +66,7 @@ public class PrincipalController {
 			return mv;
 		}
 		
-		
+		mv.addObject("sucess", "The file was import with sucess");
 		return mv;
 	}
 	
@@ -121,18 +110,8 @@ public class PrincipalController {
 		mv.addObject("data", data);
 		
 		YearMonth local = YearMonth.parse(data, DateTimeFormatter.ofPattern("yyyy-MM"));
-		
-		List<Transacao> SusTransacao = repTransacao.findAllSusTransactions(Double.valueOf("100000.00"), local.getMonthValue(), local.getYear());
-		
-		List<SuspiciousAccount> SusAccount = SusTransaction.Account(repTransacao, local.getMonthValue(), local.getYear(), Double.valueOf("1000000.00"));
-		
-		List<SuspiciousAgency> SusAgency = SusTransaction.Agency(repTransacao, local.getMonthValue(), local.getYear(), Double.valueOf("1000000000.00"));
-	
-		
-		mv.addObject("SusTransacao", SusTransacao);
-		mv.addObject("SusAccount", SusAccount);
-		mv.addObject("SusAgency", SusAgency);
-		
+
+		susTransaction.showSuspicious(local, mv);
 		
 		return mv;
 	}

@@ -1,52 +1,23 @@
 package transacao.Models;
 
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
 public class SuspiciousAgency {
-	
-	private String banco;
-	private Integer agencia;
-	private double valor;
-	private String tipo;
-	
-	public SuspiciousAgency() {}
 
-	public SuspiciousAgency(String banco, Integer agencia, double valor, String tipo) {
-		this.banco = banco;
-		this.agencia = agencia;
-		this.valor = valor;
-		this.tipo = tipo;
-	}
+    private String banco;
+    private Integer agencia;
+    private double valor;
+    private String tipo;
 
-	public String getBanco() {
-		return banco;
-	}
+    public SuspiciousAgency() {}
 
-	public void setBanco(String banco) {
-		this.banco = banco;
-	}
-
-	public Integer getAgencia() {
-		return agencia;
-	}
-
-	public void setAgencia(Integer agencia) {
-		this.agencia = agencia;
-	}
-
-	public double getValor() {
-		return valor;
-	}
-
-	public void setValor(double valor) {
-		this.valor = valor;
-	}
-
-	public String getTipo() {
-		return tipo;
-	}
-
-	public void setTipo(String tipo) {
-		this.tipo = tipo;
-	}
-	
-	
+    public SuspiciousAgency(String banco, Integer agencia, double valor, String tipo) {
+        this.banco = banco;
+        this.agencia = agencia;
+        this.valor = valor;
+        this.tipo = tipo;
+    }
 }

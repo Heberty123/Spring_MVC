@@ -3,96 +3,91 @@
 <head>
     <meta charset="UTF-8">
     <title>Insert title here</title>
+    <link rel="stylesheet" th:href="@{/css/comentario.css}">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-    <link rel="stylesheet" th:href="@{/css/comentario.css}"/>
 </head>
 <body>
 
-<!--
-<header th:replace="~{fragmentos/header:: headerr}"></header>
--->
-
-<header class="p-3 bg-dark text-white">
-    <div class="container">
-        <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
-            <a href="/" class="d-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none">
-                <svg class="bi me-2" width="40" height="32" role="img" aria-label="Bootstrap"><use xlink:href="#bootstrap"></use></svg>
-            </a>
-
-            <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
-                <li><a href="#" class="nav-link px-2 text-secondary">| Home |</a></li>
-                <li><a th:href="@{/Home/importacoes}" class="nav-link px-2 text-white">| Show import |</a></li>
-                <li><a th:href="@{/usuarios}" class="nav-link px-2 text-white">| User list |</a></li>
-                <li><a th:href="@{/Home/suspeitas}" class="nav-link px-2 text-white">| suspicious transactions |</a></li>
-                <li><a href="#" class="nav-link px-2 text-white">| About |</a></li>
-                <li><a href="#" class="nav-link px-2 text-white">| Comentários |</a></li>
-            </ul>
+<header th:replace="fragments/header :: cab(page='socialNetwork')"></header>
 
 
-            <div class="text-end">
-                <a th:href="@{/cadastrar}" class="btn btn-outline-light me-2">Cadastrar conta</a>
-                <a onclick="document.querySelector('#form-login').submit()" href="#" class="btn btn-warning">Sign-up</a>
-                <form id="form-login" th:action="@{/logout}" method="POST"></form>
+
+<div class="row py-lg-5">
+    <div class="col-lg-6 col-md-8 mx-auto">
+        <h1 class="fw-light">Welcome !</h1>
+        <p class="lead text-muted">In here, at the place of social network, you can post any commentary with optional img !</p>
+        <p>
+            <a th:href="@{/Rede/Comentario}" class="btn btn-primary my-2">to comment</a>
+            <a th:href="@{/Home}" class="btn btn-secondary my-2">Home</a>
+        </p>
+    </div>
+</div>
+
+
+<div class="section-likes" th:if="${open}" height="10px">
+    <div class="sublike">
+        <a th:href="@{/Rede/Social}"><img class="close-modal" th:src="@{/img/close.svg}" alt="close window"></a>
+            <div class="overflow-auto" style="height: 96%">
+                <div class="d-flex gap-2 align-content-center ms-3 mt-1" th:each="like : ${likes}">
+                    <img class="rounded-circle" th:src="${like.usuario.showPhoto}" width="35" height="35">
+                    <p class="m-0 text-md-start" th:text="${like.usuario.nome}">name</p>
+                    <p class="m-0 text-md-start" th:if="${like.type == 1}">Amazing</p>
+                    <p class="m-0 text-md-start" th:if="${like.type == 2}">Love</p>
+                    <p class="m-0 text-md-start" th:if="${like.type == 3}">Flowers</p>
+                    <p class="m-0 text-md-start" th:if="${like.type == 4}">Disgust</p>
+                    <p class="m-0 text-md-start" th:if="${like.type == 5}">Angry</p>
+                </div>
+            </div>
+
+        <a th:href="@{/Rede/Social}"><img class="button-close-modal" th:src="@{/img/button-close.svg}" alt="close button window"></a>
+    </div> 
+</div>
+
+
+
+<div class="container">
+
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+        <div th:each="comentario : ${comentarios}" class="col">
+            <div class="card shadow-sm">
+
+                <section class="bd-placeholder-img card-img-top bg-secondary text-white text-center align-self-center section p-2">
+                    <p class="m-0 pt-3" th:text="${comentario.description}"></p>
+                </section>
+
+
+                <div class="card-body pt-0">
+                    <div class="d-flex pt-1 gap-2" th:classappend="${comentario.usuario.username == user ? 'justify-content-between' : 'justify-content-end'}">
+                        <div th:if="${comentario.usuario.username == user}" class="d-flex gap-2">
+                            <a class="btn btn-info" th:href="@{/Rede/Comentario/edit/{id}(id = ${comentario.id})}">Edit</a>
+                            <a class="btn btn-danger" th:href="@{/Rede/Comentario/delete/{id}(id = ${comentario.id})}">Delete</a>
+                        </div>
+
+                        <div class="d-flex gap-1">
+                            <p class="m-0">Posted at </p> <p class="m-0" th:text="${#temporals.format(comentario.now, 'dd/MM/yyyy HH:mm')}">data</p>
+                        </div>
+                    </div>
+                    <div class="d-flex p-2 gap-2">
+                    <img th:src="${comentario.usuario.showPhoto}" width="55" height="55" class="rounded-circle"><h2 class="fs-5 m-0 align-self-center" th:text="${comentario.usuario.username}">title</h2>
+                    </div>
+                    <h3 class="fs-5" th:text="${comentario.subtitle}">Subtitle</h3>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div class="btn-group">
+                            <a th:href="@{/Rede/Curtidas/{curtidaId}/Comentario/{comentarioId}(curtidaId = 1, comentarioId = ${comentario.id})}" class="btn btn-sm btn-outline-secondary">Amazing</a>
+                            <a th:href="@{/Rede/Curtidas/{curtidaId}/Comentario/{comentarioId}(curtidaId = 2, comentarioId = ${comentario.id})}" class="btn btn-sm btn-outline-secondary">Love</a>
+                            <a th:href="@{/Rede/Curtidas/{curtidaId}/Comentario/{comentarioId}(curtidaId = 3, comentarioId = ${comentario.id})}" class="btn btn-sm btn-outline-secondary">Flower</a>
+                            <a th:href="@{/Rede/Curtidas/{curtidaId}/Comentario/{comentarioId}(curtidaId = 4, comentarioId = ${comentario.id})}" class="btn btn-sm btn-outline-secondary">Disgust</a>
+                            <a th:href="@{/Rede/Curtidas/{curtidaId}/Comentario/{comentarioId}(curtidaId = 5, comentarioId = ${comentario.id})}" class="btn btn-sm btn-outline-secondary">Angry</a>
+                        </div>
+                        <a th:href="@{/Rede/Show/Curtidas/{comentarioId}(comentarioId = ${comentario.id})}"><span th:text="${comentario.countLikes()}">Counts </span> Likes</a>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
-</header>
-
-<h1>Hello here will be place of social redes</h1>
-
-<section class="main-section">
-
-
-    <section th:each="comentario : ${comentarios}" class="comentario">
-        <div>
-            <div class="date-comm">
-                <p>Posted at </p>
-                <p th:text="${#dates.format(comentario.date, 'dd/MM/yyyy - HH:mm')}">data</p>
-            </div>
-            <h2 th:text="${comentario.usuario.username}">title</h2>
-            <h3 th:text="${comentario.subtitle}">Subtitle</h3>
-            <p th:text="${comentario.description}">Descricao</p>
-            <div class="bottom-comm">
-                <a th:href="@{/Rede/Curtidas/{curtidaId}/Comentario/{comentarioId}(curtidaId = 1, comentarioId = ${comentario.id})}">Amazing</a>
-                <a th:href="@{/Rede/Curtidas/{curtidaId}/Comentario/{comentarioId}(curtidaId = 2, comentarioId = ${comentario.id})}">Love</a>
-                <a th:href="@{/Rede/Curtidas/{curtidaId}/Comentario/{comentarioId}(curtidaId = 3, comentarioId = ${comentario.id})}">Flower</a>
-                <a th:href="@{/Rede/Curtidas/{curtidaId}/Comentario/{comentarioId}(curtidaId = 4, comentarioId = ${comentario.id})}">Disgust</a>
-                <a th:href="@{/Rede/Curtidas/{curtidaId}/Comentario/{comentarioId}(curtidaId = 5, comentarioId = ${comentario.id})}">Angry</a>
-                <a th:href="@{/Rede/Show/Curtidas/{comentarioId}(comentarioId = ${comentario.id})}"><span th:text="${comentario.countLikes()}">Counts </span>Curtidas</a>
-            </div>
-        </div>
-    </section>
-
-    <a th:href="@{/Rede/Comentario}">Poste seu comentário here !</a>
-
-</section>
-
-
-<div class="section-likes" th:if="${open}">
-    <div class="sublike">
-        <a th:href="@{/Rede/Close}"><img class="close-modal" th:src="@{/img/close.svg}" alt="close window"></a>
-        <h2>People that like this comment</h2>
-        <ul>
-            <li th:each="like : ${likes}">
-
-                <div>
-                    <p th:if="${like.type == 1}">Amazing</p>
-                    <p th:if="${like.type == 2}">Love</p>
-                    <p th:if="${like.type == 3}">Flowers</p>
-                    <p th:if="${like.type == 4}">Disgust</p>
-                    <p th:if="${like.type == 5}">Angry</p>
-                    <p th:text="${like.usuario.nome}">name</p>
-                </div>
-
-
-
-
-            </li>
-        </ul>
-        <a th:href="@{/Rede/Close}"><img class="button-close-modal" th:src="@{/img/button-close.svg}" alt="close button window"></a>
-    </div> 
 </div>
-  
+
+
 
 
 <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 my-2 border-top p-3">

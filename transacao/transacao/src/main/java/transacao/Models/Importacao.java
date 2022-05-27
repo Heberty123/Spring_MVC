@@ -1,9 +1,13 @@
 package transacao.Models;
 
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.Date;
-import java.util.List;
+import lombok.Getter;
+import lombok.Setter;
+import org.apache.tomcat.jni.Local;
+import transacao.Models.RedeSocial.Comentario;
+import transacao.Service.ConfigImg;
+
+import java.time.*;
+import java.util.*;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -12,14 +16,17 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
+@Getter
+@Setter
 @Entity
 public class Importacao implements Comparable<Importacao> {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	private Date dateHours;
+	private ZonedDateTime now = ZonedDateTime.now(ZoneId.of("America/Sao_Paulo"));
 	private Date date;
+
 	@ManyToOne
 	private Usuario usuario;
 	@OneToMany(mappedBy="importacao")
@@ -28,55 +35,19 @@ public class Importacao implements Comparable<Importacao> {
 
 	public Importacao() {}
 	
-	public Importacao(Date dateHours, Date date) {
-		this.dateHours = dateHours;
+	public Importacao(Date date) {
 		this.date = date;
-	}
-
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	public Date getDateHours() {
-		return dateHours;
-	}
-
-	public void setDateHours(Date dateHours) {
-		this.dateHours = dateHours;
-	}
-
-	public Date getDate() {
-		return date;
-	}
-
-	public void setDate(Date date) {
-		this.date = date;
-	}
-
-	public Usuario getUsuario() {
-		return usuario;
-	}
-
-	public void setUsuario(Usuario usuario) {
-		this.usuario = usuario;
 	}
 
 	@Override
 	public int compareTo(Importacao o) {
-		
-		return this.dateHours.compareTo(o.getDateHours());
+		return this.now.compareTo(o.getNow());
 	}
 
-/*
-	@Override
-	public int compare(Importacao o1, Importacao o2) {
-		
-		return o1.getDateHours().compareTo(o2.getDateHours());
-	}
-*/	
+
+
+
+
+
 	
 }
